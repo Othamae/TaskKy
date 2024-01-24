@@ -8,7 +8,7 @@ const Logo = () => {
         <Link href='/'>
             <div className='hover:opacity-75 transiton items-center gap-x-1 hidden md:flex'>
                 <Image
-                    src='/logo.png'
+                    src='/logo.webp'
                     alt='Logo'
                     width={30}
                     height={30}></Image>
