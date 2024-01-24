@@ -1,0 +1,22 @@
+import { headingFont } from '@/lib/fonts'
+import { cn } from '@/lib/utils'
+import Image from 'next/image'
+import Link from 'next/link'
+
+const Logo = () => {
+    return (
+        <Link href='/'>
+            <div className='hover:opacity-75 transiton items-center gap-x-1 hidden md:flex'>
+                <Image
+                    src='/logo.png'
+                    alt='Logo'
+                    width={30}
+                    height={30}></Image>
+                <p className={cn('text-lg text-neutral-700',
+                    headingFont.className)}>TaskKy</p>
+            </div>
+        </Link>
+    )
+}
+
+export default Logo
