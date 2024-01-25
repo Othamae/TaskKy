@@ -1,11 +1,8 @@
-import { OrganizationSwitcher, auth } from "@clerk/nextjs"
+import { auth } from '@clerk/nextjs'
 
 const OrganizationIdPage = () => {
-    const { orgId } = auth()
-    return (
-        <OrganizationSwitcher
-            hidePersonal />
-    )
+	const { orgId } = auth()
+	return <span>Organization: {orgId}</span>
 }
 
 export default OrganizationIdPage
