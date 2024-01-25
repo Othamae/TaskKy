@@ -54,14 +54,14 @@ const NavItem = ({ isActive, isExpanded, organization, onExapand }: NavItemProps
 					isActive && !isExpanded && 'bg-sky-500/10 text-sky-700',
 				)}
 			>
-				<div className='flex items-center gap-x-2'>
-					<div className='w-7 h-7 relative'>
+				<div className="flex items-center gap-x-2">
+					<div className="w-7 h-7 relative">
 						<Image fill src={organization.imageUrl} alt={organization.name} className="rounded-sm object-cover"></Image>
 					</div>
-					<span className='font-medio text-sm'>{organization.name}</span>
+					<span className="font-medio text-sm">{organization.name}</span>
 				</div>
 			</AccordionTrigger>
-			<AccordionContent className='pt-1 text-neutral-700'>
+			<AccordionContent className="pt-1 text-neutral-700">
 				{routes.map((route) => (
 					<Button
 						key={route.href}
