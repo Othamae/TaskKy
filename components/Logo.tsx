@@ -12,7 +12,7 @@ const Logo = () => {
                     alt='Logo'
                     width={30}
                     height={30}></Image>
-                <p className={cn('text-lg text-neutral-700',
+                <p className={cn('text-lg text-neutral-700 mt-1',
                     headingFont.className)}>TaskKy</p>
             </div>
         </Link>
