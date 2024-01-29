@@ -8,19 +8,40 @@ import { CreateBoard } from './schema'
 import { InputType, ReturnType } from './types'
 
 const handler = async (data: InputType): Promise<ReturnType> => {
-    const { userId } = auth()
-    if (!userId) {
+    const { userId, orgId } = auth()
+    if (!userId || !orgId) {
         return {
             error: 'You must be logged in to create a board',
         }
     }
 
-    const { title } = data
+    const { title, image } = data
+    const [
+        imageId,
+        imageThumUrl,
+        imageFullUrl,
+        imageLinkHTML,
+        imageUserName
+    ] = image.split('|')
+
+
+    if (!imageId || !imageThumUrl || !imageFullUrl || !imageLinkHTML || !imageUserName) {
+        return {
+            error: 'Missing fields. Failed to create board.'
+        }
+    }
+
     let board
     try {
         board = await db.board.create({
             data: {
-                title
+                title,
+                orgId,
+                imageId,
+                imageThumUrl,
+                imageFullUrl,
+                imageLinkHTML,
+                imageUserName,
             }
         })
     } catch (error) {
