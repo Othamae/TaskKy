@@ -1,4 +1,5 @@
 import { Separator } from "@/components/ui/separator"
+import { Suspense } from "react"
 import BoardList from "./_components/BoardList"
 import OrgInfo from "./_components/OrgInfo"
 
@@ -8,7 +9,9 @@ const OrganizationIdPage = async () => {
 			<OrgInfo />
 			<Separator className="my-4" />
 			<div className="px-2 md:px-4">
-				<BoardList />
+				<Suspense fallback={<BoardList.skeleton />}>
+					<BoardList />
+				</Suspense>
 			</div>
 		</div>
 	)
