@@ -24,8 +24,8 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 				id,
 				boardId,
 				board: {
-					orgId
-				}
+					orgId,
+				},
 			},
 			data: {
 				title,

@@ -23,9 +23,9 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 			where: {
 				id,
 				list: {
-					board: { orgId }
+					board: { orgId },
 				},
-			}
+			},
 		})
 
 		if (!cardToCopy) return { error: 'Card not found' }
@@ -33,7 +33,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 		const lastCard = await db.card.findFirst({
 			where: { listId: cardToCopy.listId },
 			orderBy: { order: 'desc' },
-			select: { order: true }
+			select: { order: true },
 		})
 
 		const newOrder = lastCard ? lastCard?.order + 1 : 1
@@ -43,9 +43,8 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 				description: cardToCopy.description,
 				order: newOrder,
 				listId: cardToCopy.listId,
-			}
+			},
 		})
-
 	} catch (error) {
 		return {
 			error: 'Faile to copy',

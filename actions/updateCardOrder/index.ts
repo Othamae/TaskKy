@@ -25,15 +25,16 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 					id: card.id,
 					list: {
 						board: {
-							orgId
-						}
-					}
+							orgId,
+						},
+					},
 				},
 				data: {
 					order: card.order,
-					listId: card.listId
-				}
-			}))
+					listId: card.listId,
+				},
+			}),
+		)
 		updatedCards = await db.$transaction(transaction)
 	} catch (error) {
 		return {

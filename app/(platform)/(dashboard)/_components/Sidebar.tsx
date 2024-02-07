@@ -39,11 +39,11 @@ const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
 	if (!isLoadedOrg || !isLoadedOrgList || userMemberships.isLoading) {
 		return (
 			<>
-				<div className="flex items-center justify-between mb-2">
-					<Skeleton className="h-10 w-[50%]" />
-					<Skeleton className="h-10 w-10" />
+				<div className='flex items-center justify-between mb-2'>
+					<Skeleton className='h-10 w-[50%]' />
+					<Skeleton className='h-10 w-10' />
 				</div>
-				<div className="space-y-2">
+				<div className='space-y-2'>
 					<NavItem.Skeleton />
 					<NavItem.Skeleton />
 					<NavItem.Skeleton />
@@ -54,16 +54,16 @@ const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
 
 	return (
 		<>
-			<div className="font-medium text-xs flex items-center mb-1">
-				<span className="pl-4">Workspaces</span>
+			<div className='font-medium text-xs flex items-center mb-1'>
+				<span className='pl-4'>Workspaces</span>
 				<Link
-					href="/select-org"
-					className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 ml-auto"
+					href='/select-org'
+					className='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 ml-auto'
 				>
-					<Plus className="h-4 w-4" />
+					<Plus className='h-4 w-4' />
 				</Link>
 			</div>
-			<Accordion type="multiple" defaultValue={defaultAccordionValue} className="space-y-2">
+			<Accordion type='multiple' defaultValue={defaultAccordionValue} className='space-y-2'>
 				{userMemberships.data.map(({ organization }) => (
 					<NavItem
 						key={organization.id}

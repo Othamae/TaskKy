@@ -41,19 +41,19 @@ const FormPopover = ({ children, side = 'bottom', align, sideOffset = 0 }: FormP
 	return (
 		<Popover>
 			<PopoverTrigger asChild>{children}</PopoverTrigger>
-			<PopoverContent side={side} align={align} className="w-80 pt-3" sideOffset={sideOffset}>
-				<div className="text-sm font-medium text-center text-neutral-600 pb-4">Create board</div>
+			<PopoverContent side={side} align={align} className='w-80 pt-3' sideOffset={sideOffset}>
+				<div className='text-sm font-medium text-center text-neutral-600 pb-4'>Create board</div>
 				<PopoverClose ref={closeRef} asChild>
-					<Button className="h-auto w-auto absolute top-2 right-2 text-neutral-600" variant="ghost">
-						<X className="h-4 w-4" />
+					<Button className='h-auto w-auto absolute top-2 right-2 text-neutral-600' variant='ghost'>
+						<X className='h-4 w-4' />
 					</Button>
 				</PopoverClose>
-				<form action={onSubmit} className="space-y-4">
-					<div className="space-y-4">
-						<FormPicker id="image" errors={fieldErrors}></FormPicker>
-						<FormInput id="title" label="Board title" type="text" errors={fieldErrors} />
+				<form action={onSubmit} className='space-y-4'>
+					<div className='space-y-4'>
+						<FormPicker id='image' errors={fieldErrors}></FormPicker>
+						<FormInput id='title' label='Board title' type='text' errors={fieldErrors} />
 					</div>
-					<FormSubmitButton className="w-full">Create</FormSubmitButton>
+					<FormSubmitButton className='w-full'>Create</FormSubmitButton>
 				</form>
 			</PopoverContent>
 		</Popover>

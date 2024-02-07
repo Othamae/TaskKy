@@ -26,12 +26,12 @@ const MobileSidebar = () => {
 	if (!isMounted) return null
 	return (
 		<>
-			<Button onClick={onOpen} className="block md:hidden mr-2" variant="ghost" size="sm">
-				<Menu className="h-4 w-4" />
+			<Button onClick={onOpen} className='block md:hidden mr-2' variant='ghost' size='sm'>
+				<Menu className='h-4 w-4' />
 			</Button>
 			<Sheet open={isOpen} onOpenChange={onClose}>
-				<SheetContent side="left" className="p-2 pt-10">
-					<Sidebar storageKey="t-sidebar-mobile-state" />
+				<SheetContent side='left' className='p-2 pt-10'>
+					<Sidebar storageKey='t-sidebar-mobile-state' />
 				</SheetContent>
 			</Sheet>
 		</>

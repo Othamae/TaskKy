@@ -24,12 +24,12 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 				id,
 				boardId,
 				board: {
-					orgId
-				}
+					orgId,
+				},
 			},
 			include: {
 				cards: true,
-			}
+			},
 		})
 
 		if (!listToCopy) return { error: 'List not found' }
@@ -37,10 +37,8 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 		const lastList = await db.list.findFirst({
 			where: { boardId },
 			orderBy: { order: 'desc' },
-			select: { order: true }
+			select: { order: true },
 		})
-
-
 
 		const newOrder = lastList ? lastList?.order + 1 : 1
 		list = await db.list.create({
@@ -50,26 +48,23 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 				order: newOrder,
 				cards: {
 					createMany: {
-						data: listToCopy.cards.map(card => ({
+						data: listToCopy.cards.map((card) => ({
 							title: card.title,
 							description: card.description,
 							order: card.order,
 						})),
-					}
-				}
+					},
+				},
 			},
 			include: {
-				cards: true
-			}
+				cards: true,
+			},
 		})
-
 	} catch (error) {
 		return {
 			error: 'Faile to copy',
 		}
 	}
-
-
 
 	revalidatePath(`/board/${boardId}`)
 	return { data: list }

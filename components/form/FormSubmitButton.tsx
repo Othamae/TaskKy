@@ -13,7 +13,7 @@ interface FormSubmitButtonProps {
 const FormSubmitButton = ({ children, disabled, className, variant = 'primary' }: FormSubmitButtonProps) => {
 	const { pending } = useFormStatus()
 	return (
-		<Button variant={variant} disabled={pending || disabled} className={cn(className)} type="submit" size="sm">
+		<Button variant={variant} disabled={pending || disabled} className={cn(className)} type='submit' size='sm'>
 			{children}
 		</Button>
 	)

@@ -24,13 +24,14 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 				where: {
 					id: list.id,
 					board: {
-						orgId
-					}
+						orgId,
+					},
 				},
 				data: {
 					order: list.order,
-				}
-			}))
+				},
+			}),
+		)
 		lists = await db.$transaction(transaction)
 	} catch (error) {
 		return {

@@ -32,7 +32,7 @@ const BoardIdPage = async ({ params }: BoardIdPageProps) => {
 		},
 	})
 	return (
-		<div className="p-4 h-full overflow-x-auto">
+		<div className='p-4 h-full overflow-x-auto'>
 			<ListContainer boardId={boardId} list={lists} />
 		</div>
 	)

@@ -23,11 +23,10 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 			where: {
 				id,
 				list: {
-					board: { orgId }
+					board: { orgId },
 				},
-			}
+			},
 		})
-
 	} catch (error) {
 		return {
 			error: 'Faile to delete',

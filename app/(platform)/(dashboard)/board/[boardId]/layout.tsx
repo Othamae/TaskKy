@@ -28,12 +28,12 @@ const BoardIdLayout = async ({ children, params }: { children: React.ReactNode; 
 	if (!board) notFound()
 	return (
 		<div
-			className="relative h-full bg-no-repeat bg-cover bg-center"
+			className='relative h-full bg-no-repeat bg-cover bg-center'
 			style={{ backgroundImage: `url(${board.imageFullUrl})` }}
 		>
 			<BoardNavbar board={board} />
-			<div className="absolute inset-0 bg-black/10" />
-			<main className="relative pt-28 h-full">{children}</main>
+			<div className='absolute inset-0 bg-black/10' />
+			<main className='relative pt-28 h-full'>{children}</main>
 		</div>
 	)
 }
