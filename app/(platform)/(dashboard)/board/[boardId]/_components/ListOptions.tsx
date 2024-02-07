@@ -1,16 +1,12 @@
 'use client'
 
-import { copyList } from '@/actions/copyList'
-import { deleteList } from '@/actions/deleteList'
 import FormSubmitButton from '@/components/form/FormSubmitButton'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverClose, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
-import { useAction } from '@/hooks/useAction'
+import { UseListOptions } from '@/hooks/useListOptions'
 import { List } from '@prisma/client'
 import { MoreHorizontal, X } from 'lucide-react'
-import { ElementRef, useRef } from 'react'
-import { toast } from 'sonner'
 
 
 interface ListOptionsProps {
@@ -19,37 +15,38 @@ interface ListOptionsProps {
 }
 
 const ListOptions = ({ list, onAddCard }: ListOptionsProps) => {
-    const closeRef = useRef<ElementRef<'button'>>(null)
-    const { execute: executeDelete } = useAction(deleteList, {
-        onSuccess: (data) => {
-            toast.success(`List "${data.title}" deleted successfully`)
-            closeRef.current?.click()
-        },
-        onError: (error) => {
-            toast.error(error)
-        }
-    })
-    const { execute: executeCopy } = useAction(copyList, {
-        onSuccess: (data) => {
-            toast.success(`List "${data.title}" copied`)
-            closeRef.current?.click()
-        },
-        onError: (error) => {
-            toast.error(error)
-        }
-    })
+    // const closeRef = useRef<ElementRef<'button'>>(null)
+    // const { execute: executeDelete } = useAction(deleteList, {
+    //     onSuccess: (data) => {
+    //         toast.success(`List "${data.title}" deleted successfully`)
+    //         closeRef.current?.click()
+    //     },
+    //     onError: (error) => {
+    //         toast.error(error)
+    //     }
+    // })
+    // const { execute: executeCopy } = useAction(copyList, {
+    //     onSuccess: (data) => {
+    //         toast.success(`List "${data.title}" copied`)
+    //         closeRef.current?.click()
+    //     },
+    //     onError: (error) => {
+    //         toast.error(error)
+    //     }
+    // })
 
-    const handleDelete = (formData: FormData) => {
-        const id = formData.get('id') as string
-        const boardId = formData.get('boardId') as string
-        executeDelete({ id, boardId })
-    }
+    // const handleDelete = (formData: FormData) => {
+    //     const id = formData.get('id') as string
+    //     const boardId = formData.get('boardId') as string
+    //     executeDelete({ id, boardId })
+    // }
 
-    const handleCopy = (formData: FormData) => {
-        const id = formData.get('id') as string
-        const boardId = formData.get('boardId') as string
-        executeCopy({ id, boardId })
-    }
+    // const handleCopy = (formData: FormData) => {
+    //     const id = formData.get('id') as string
+    //     const boardId = formData.get('boardId') as string
+    //     executeCopy({ id, boardId })
+    // }
+    const { handleCopy, handleDelete, closeRef } = UseListOptions()
 
     return (
         <Popover>
