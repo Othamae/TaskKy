@@ -30,10 +30,13 @@ const Description = ({ data }: DescriptionProps) => {
 
 	const { execute, fieldErrors } = useAction(updateCard, {
 		onSuccess: (data) => {
-			toast.success(`Card "${data.title}" updated`)
+			toast.success(`Description updated for "${data.title}"`)
 			disableEditing()
 			queryClient.invalidateQueries({
 				queryKey: ['card', data.id],
+			})
+			queryClient.invalidateQueries({
+				queryKey: ['card-logs', data.id],
 			})
 		},
 		onError: (error) => {
