@@ -1,28 +1,19 @@
 import { createList } from '@/actions/createList'
 import { useAction } from '@/hooks/useAction'
 import { useParams, useRouter } from 'next/navigation'
-import { ElementRef, useRef, useState } from 'react'
+import { ElementRef, useRef } from 'react'
 import { toast } from 'sonner'
 import { useEventListener, useOnClickOutside } from 'usehooks-ts'
+import { useEditing } from './useEditing'
 
 
 export const useListForm = () => {
     const params = useParams()
     const router = useRouter()
-    const [isEditing, setIsEditing] = useState(false)
     const formRef = useRef<ElementRef<'form'>>(null)
     const inputRef = useRef<ElementRef<'input'>>(null)
 
-    const enableEditing = () => {
-        setIsEditing(true)
-        setTimeout(() => {
-            inputRef.current?.focus()
-        })
-    }
-
-    const disableEditing = () => {
-        setIsEditing(false)
-    }
+    const { isEditing, disableEditing, enableEditing } = useEditing({ refElement: inputRef })
 
     const { execute, fieldErrors } = useAction(createList, {
         onSuccess: (data) => {

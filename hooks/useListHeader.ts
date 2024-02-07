@@ -4,25 +4,15 @@ import { useAction } from '@/hooks/useAction'
 import { ElementRef, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { useEventListener } from 'usehooks-ts'
+import { useEditing } from './useEditing'
 
 export const useListHeader = (defaultTitle: string) => {
     const [title, setTitle] = useState(defaultTitle)
-    const [isEditing, setIsEditing] = useState(false)
 
     const formRef = useRef<ElementRef<'form'>>(null)
     const inputRef = useRef<ElementRef<'input'>>(null)
 
-    const enableEditing = () => {
-        setIsEditing(true)
-        setTimeout(() => {
-            inputRef.current?.focus()
-            inputRef.current?.select()
-        })
-    }
-
-    const disableEditing = () => {
-        setIsEditing(false)
-    }
+    const { disableEditing, enableEditing, isEditing } = useEditing({ refElement: inputRef, select: true })
 
     const { execute } = useAction(updateList, {
         onSuccess: (data) => {
