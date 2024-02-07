@@ -2,6 +2,7 @@
 import { db } from '@/lib/db'
 
 import { createAuditLog } from '@/lib/createAuditLog'
+import { hasAvailableCount, incrementAvailableCount } from '@/lib/orgLimit'
 import { auth } from '@clerk/nextjs'
 import { ACTION, ENTITY_TYPE } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
@@ -16,6 +17,9 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 			error: 'You must be logged in to create a board',
 		}
 	}
+
+	const canCreate = await hasAvailableCount()
+	if (!canCreate) return { error: 'You have reached the limit of free boards. Please upgrade to create more.' }
 
 	const { title, image } = data
 	const [imageId, imageThumUrl, imageFullUrl, imageLinkHTML, imageUserName] = image.split('|')
@@ -39,6 +43,8 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 				imageUserName,
 			},
 		})
+
+		await incrementAvailableCount()
 		await createAuditLog({
 			entityType: ENTITY_TYPE.BOARD,
 			entityId: board.id,
