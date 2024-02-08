@@ -1,6 +1,8 @@
 import Logo from '@/components/Logo'
 import FormPopover from '@/components/form/FormPopover'
 import { Button } from '@/components/ui/button'
+import { CREATE } from '@/const/const'
+import { HOME, ORGANIZATION, SELECT_ORG } from '@/const/routes'
 import { OrganizationSwitcher, UserButton } from '@clerk/nextjs'
 import { Plus } from 'lucide-react'
 import MobileSidebar from './MobileSidebar'
@@ -15,7 +17,7 @@ const Navbar = () => {
 				</div>
 				<FormPopover align='start' side='bottom' sideOffset={18}>
 					<Button variant='primary' size='sm' className='rounded-sm hidden md:block h-auto py-1.5 px-2'>
-						Create
+						{CREATE}
 					</Button>
 				</FormPopover>
 				<FormPopover align='start' side='bottom' sideOffset={18}>
@@ -28,9 +30,9 @@ const Navbar = () => {
 			<div className='ml-auto flex items-center gap-x-2'>
 				<OrganizationSwitcher
 					hidePersonal
-					afterCreateOrganizationUrl='/organization/:id'
-					afterLeaveOrganizationUrl='/select-org'
-					afterSelectOrganizationUrl='/organization/:id'
+					afterCreateOrganizationUrl={`${ORGANIZATION}/:id`}
+					afterLeaveOrganizationUrl={SELECT_ORG}
+					afterSelectOrganizationUrl={`${ORGANIZATION}/:id`}
 					appearance={{
 						elements: {
 							rootBox: {
@@ -42,7 +44,7 @@ const Navbar = () => {
 					}}
 				/>
 				<UserButton
-					afterSignOutUrl='/'
+					afterSignOutUrl={HOME}
 					appearance={{
 						elements: {
 							avatarBox: {
