@@ -1,39 +1,20 @@
 'use client'
 
-import { stripeRedirect } from '@/actions/stripeRedirect'
 import { Button } from '@/components/ui/button'
-import { useAction } from '@/hooks/useAction'
+import { MANAGE_SUBSCRIPTION, UPGRADE_PRO } from '@/const/const'
 import { useProModal } from '@/hooks/useProModal'
-import { toast } from 'sonner'
 
 interface SubscriptionButtonProps {
     isPro: boolean
 }
 
 const SubscriptionButton = ({ isPro }: SubscriptionButtonProps) => {
-    const proModal = useProModal()
-
-    const { execute, isLoading } = useAction(stripeRedirect, {
-        onSuccess: (data) => {
-            window.location.href = data
-        },
-        onError: (error) => {
-            toast.error(error)
-        }
-    })
-
-    const onClick = () => {
-        if (isPro) {
-            execute({})
-        } else {
-            proModal.onOpen()
-        }
-    }
+    const { isLoading, onClick } = useProModal(isPro)
     return (
         <Button variant='primary'
             onClick={onClick}
             disabled={isLoading}>
-            {isPro ? 'Manage Subscription' : 'Upgrade to Pro'}
+            {isPro ? MANAGE_SUBSCRIPTION : UPGRADE_PRO}
         </Button>
     )
 }
