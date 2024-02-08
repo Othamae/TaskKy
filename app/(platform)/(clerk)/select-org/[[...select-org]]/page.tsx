@@ -1,11 +1,12 @@
+import { ORGANIZATION } from '@/const/routes'
 import { OrganizationList } from '@clerk/nextjs'
 
 const CreateOrganizationPage = () => {
 	return (
 		<OrganizationList
 			hidePersonal
-			afterCreateOrganizationUrl='/organization/:id'
-			afterSelectOrganizationUrl='/organization/:id'
+			afterCreateOrganizationUrl={`${ORGANIZATION}/:id`}
+			afterSelectOrganizationUrl={`${ORGANIZATION}/:id`}
 		/>
 	)
 }
