@@ -1,3 +1,5 @@
+import { TYPE_BOARD } from '@/const/const'
+import { SELECT_ORG } from '@/const/routes'
 import { db } from '@/lib/db'
 import { auth } from '@clerk/nextjs'
 import { notFound, redirect } from 'next/navigation'
@@ -6,19 +8,19 @@ import BoardNavbar from './_components/BoardNavbar'
 
 export async function generateMetadata({ params }: { params: { boardId: string } }) {
 	const { orgId } = auth()
-	if (!orgId) return { title: 'Board' }
+	if (!orgId) return { title: TYPE_BOARD }
 	const board = await db.board.findUnique({
 		where: {
 			id: params.boardId,
 			orgId,
 		},
 	})
-	return { title: board?.title || 'Board' }
+	return { title: board?.title || TYPE_BOARD }
 }
 
 const BoardIdLayout = async ({ children, params }: { children: React.ReactNode; params: { boardId: string } }) => {
 	const { orgId } = auth()
-	if (!orgId) redirect('/select-org')
+	if (!orgId) redirect(SELECT_ORG)
 	const board = await db.board.findUnique({
 		where: {
 			id: params.boardId,
