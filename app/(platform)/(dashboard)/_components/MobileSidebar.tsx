@@ -2,27 +2,12 @@
 
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
-import { useMobileSidebarStore } from '@/hooks/useMobileSidebar'
+import { useMobileSidebar } from '@/hooks/useMobileSidebar'
 import { Menu } from 'lucide-react'
-import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
 import Sidebar from './Sidebar'
 
 const MobileSidebar = () => {
-	const pathname = usePathname()
-	const [isMounted, setIsMounted] = useState(false)
-	const onOpen = useMobileSidebarStore((state) => state.onOpen)
-	const onClose = useMobileSidebarStore((state) => state.onClose)
-	const isOpen = useMobileSidebarStore((state) => state.isOpen)
-
-	useEffect(() => {
-		setIsMounted(true)
-	}, [])
-
-	useEffect(() => {
-		onClose()
-	}, [pathname, onClose])
-
+	const { isMounted, isOpen, onClose, onOpen } = useMobileSidebar()
 	if (!isMounted) return null
 	return (
 		<>
