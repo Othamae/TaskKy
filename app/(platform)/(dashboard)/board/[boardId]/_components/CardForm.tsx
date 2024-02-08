@@ -3,6 +3,7 @@
 import FormSubmitButton from '@/components/form/FormSubmitButton'
 import FormTextarea from '@/components/form/FormTextarea'
 import { Button } from '@/components/ui/button'
+import { ADD_A_CARD, ADD_CARD, ENTER_A_TITTLE_PLACEHOLDER } from '@/const/const'
 import { useCardForm } from '@/hooks/useCardForm'
 import { Plus, X } from 'lucide-react'
 import { forwardRef } from 'react'
@@ -25,12 +26,12 @@ const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
 						id='title'
 						onKeyDown={onTextareaKeyDown}
 						ref={ref}
-						placeholder='Enter a title for this card...'
+						placeholder={ENTER_A_TITTLE_PLACEHOLDER}
 						errors={fieldErrors}
 					/>
 					<input name='listId' hidden id='listId' value={listId} />
 					<div className='flex items-center gap-x-1'>
-						<FormSubmitButton>Add card</FormSubmitButton>
+						<FormSubmitButton>{ADD_CARD}</FormSubmitButton>
 						<Button onClick={disableEditing} size='sm' variant='ghost'>
 							<X className='h-5 w-5' />
 						</Button>
@@ -48,7 +49,7 @@ const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
 					variant='ghost'
 				>
 					<Plus className='w-4 h-4 mr-2'></Plus>
-					Add a card
+					{ADD_A_CARD}
 				</Button>
 			</div>
 		)
