@@ -3,11 +3,12 @@
 import { AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { ORGANIZATION } from '@/const/routes'
+import { useNavItem } from '@/hooks/useNavItem'
 import { Organization } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import { Activity, CreditCard, Layout, Settings } from 'lucide-react'
 import Image from 'next/image'
-import { usePathname, useRouter } from 'next/navigation'
 
 interface NavItemProps {
 	isActive: boolean
@@ -17,34 +18,29 @@ interface NavItemProps {
 }
 
 const NavItem = ({ isActive, isExpanded, organization, onExapand }: NavItemProps) => {
-	const router = useRouter()
-	const pathname = usePathname()
 	const routes = [
 		{
 			label: 'Boards',
 			icon: <Layout className='h-4 w-4 mr-2' />,
-			href: `/organization/${organization.id}`,
+			href: `${ORGANIZATION}/${organization.id}`,
 		},
 		{
 			label: 'Activity',
 			icon: <Activity className='h-4 w-4 mr-2' />,
-			href: `/organization/${organization.id}/activity`,
+			href: `${ORGANIZATION}/${organization.id}/activity`,
 		},
 		{
 			label: 'Settings',
 			icon: <Settings className='h-4 w-4 mr-2' />,
-			href: `/organization/${organization.id}/settings`,
+			href: `${ORGANIZATION}/${organization.id}/settings`,
 		},
 		{
 			label: 'Billing',
 			icon: <CreditCard className='h-4 w-4 mr-2' />,
-			href: `/organization/${organization.id}/billing`,
+			href: `${ORGANIZATION}/${organization.id}/billing`,
 		},
 	]
-
-	const onClick = (href: string) => {
-		router.push(href)
-	}
+	const { onClick, pathname } = useNavItem(organization.id)
 	return (
 		<AccordionItem value={organization.id} className='border-none'>
 			<AccordionTrigger
