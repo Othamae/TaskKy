@@ -1,7 +1,10 @@
 'use server'
 import { db } from '@/lib/db'
 
-import { createAuditLog } from '@/lib/createAuditLog'
+import { TYPE_LIST } from '@/const/const'
+import { ERROR_CREATE, ERROR_NOTFOUND, ERROR_UNAUTHORIZED } from '@/const/errorMessages'
+import { BOARD } from '@/const/routes'
+import { createAuditLog } from '@/lib/helpers/createAuditLog'
 import { auth } from '@clerk/nextjs'
 import { ACTION, ENTITY_TYPE } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
@@ -13,7 +16,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 	const { userId, orgId } = auth()
 	if (!userId || !orgId) {
 		return {
-			error: 'Unauthorized',
+			error: ERROR_UNAUTHORIZED,
 		}
 	}
 
@@ -29,7 +32,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 				},
 			},
 		})
-		if (!list) return { error: 'List not found' }
+		if (!list) return { error: `${TYPE_LIST} ${ERROR_NOTFOUND}` }
 
 		const lastCard = await db.card.findFirst({
 			where: { listId },
@@ -55,11 +58,11 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 		})
 	} catch (error) {
 		return {
-			error: 'Faile to create',
+			error: ERROR_CREATE,
 		}
 	}
 
-	revalidatePath(`/board/${boardId}`)
+	revalidatePath(`${BOARD}/${boardId}`)
 	return { data: card }
 }
 

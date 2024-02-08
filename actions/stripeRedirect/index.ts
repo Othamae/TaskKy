@@ -4,7 +4,7 @@ import { ERROR_SOMETHING_WRONG, ERROR_UNAUTHORIZED } from '@/const/errorMessages
 import { ORGANIZATION } from '@/const/routes'
 import { BILLING_ADDRESS_COLLECTION, CURRENCY, MODE, PAYMENT_TYPES, PRODUCT_DATA_DESCRIPTION, PRODUCT_DATA_NAME, QUANTITY, RECURRING_INTERVAL, UNIT_AMOUNT } from '@/const/stripe'
 import { db } from '@/lib/db'
-import { stripe } from '@/lib/stripe'
+import { stripe } from '@/lib/helpers/stripe'
 import { absoluteUrl } from '@/lib/utils'
 import { auth, currentUser } from '@clerk/nextjs'
 import { revalidatePath } from 'next/cache'

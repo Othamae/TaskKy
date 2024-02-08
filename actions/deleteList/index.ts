@@ -1,7 +1,9 @@
 'use server'
 import { db } from '@/lib/db'
 
-import { createAuditLog } from '@/lib/createAuditLog'
+import { ERROR_DELETE, ERROR_UNAUTHORIZED } from '@/const/errorMessages'
+import { BOARD } from '@/const/routes'
+import { createAuditLog } from '@/lib/helpers/createAuditLog'
 import { auth } from '@clerk/nextjs'
 import { ACTION, ENTITY_TYPE } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
@@ -13,7 +15,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 	const { userId, orgId } = auth()
 	if (!userId || !orgId) {
 		return {
-			error: 'Unauthorized',
+			error: ERROR_UNAUTHORIZED,
 		}
 	}
 
@@ -38,11 +40,11 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 		})
 	} catch (error) {
 		return {
-			error: 'Faile to delete',
+			error: ERROR_DELETE,
 		}
 	}
 
-	revalidatePath(`/board/${boardId}`)
+	revalidatePath(`${BOARD}/${boardId}`)
 	return { data: list }
 }
 

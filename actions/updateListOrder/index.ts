@@ -1,6 +1,8 @@
 'use server'
 import { db } from '@/lib/db'
 
+import { ERROR_REORDER, ERROR_UNAUTHORIZED } from '@/const/errorMessages'
+import { BOARD } from '@/const/routes'
 import { auth } from '@clerk/nextjs'
 import { revalidatePath } from 'next/cache'
 import { createSafeAction } from '../createSafeAction'
@@ -11,7 +13,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 	const { userId, orgId } = auth()
 	if (!userId || !orgId) {
 		return {
-			error: 'Unauthorized',
+			error: ERROR_UNAUTHORIZED,
 		}
 	}
 
@@ -35,11 +37,11 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 		lists = await db.$transaction(transaction)
 	} catch (error) {
 		return {
-			error: 'Faile to reorder',
+			error: ERROR_REORDER,
 		}
 	}
 
-	revalidatePath(`/board/${boardId}`)
+	revalidatePath(`${BOARD}/${boardId}`)
 	return { data: lists }
 }
 

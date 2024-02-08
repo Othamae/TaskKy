@@ -1,7 +1,10 @@
 'use server'
 import { db } from '@/lib/db'
 
-import { createAuditLog } from '@/lib/createAuditLog'
+import { COPY, TYPE_CARD } from '@/const/const'
+import { ERROR_COPY, ERROR_NOTFOUND, ERROR_UNAUTHORIZED } from '@/const/errorMessages'
+import { BOARD } from '@/const/routes'
+import { createAuditLog } from '@/lib/helpers/createAuditLog'
 import { auth } from '@clerk/nextjs'
 import { ACTION, ENTITY_TYPE } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
@@ -13,7 +16,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 	const { userId, orgId } = auth()
 	if (!userId || !orgId) {
 		return {
-			error: 'Unauthorized',
+			error: ERROR_UNAUTHORIZED,
 		}
 	}
 
@@ -30,7 +33,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 			},
 		})
 
-		if (!cardToCopy) return { error: 'Card not found' }
+		if (!cardToCopy) return { error: `${TYPE_CARD} ${ERROR_NOTFOUND}` }
 
 		const lastCard = await db.card.findFirst({
 			where: { listId: cardToCopy.listId },
@@ -41,7 +44,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 		const newOrder = lastCard ? lastCard?.order + 1 : 1
 		card = await db.card.create({
 			data: {
-				title: `${cardToCopy.title} - Copy`,
+				title: `${cardToCopy.title} - ${COPY}`,
 				description: cardToCopy.description,
 				order: newOrder,
 				listId: cardToCopy.listId,
@@ -56,11 +59,11 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 		})
 	} catch (error) {
 		return {
-			error: 'Faile to copy',
+			error: ERROR_COPY,
 		}
 	}
 
-	revalidatePath(`/board/${boardId}`)
+	revalidatePath(`${BOARD}/${boardId}`)
 	return { data: card }
 }
 

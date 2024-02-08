@@ -1,8 +1,11 @@
 'use server'
 import { db } from '@/lib/db'
 
-import { createAuditLog } from '@/lib/createAuditLog'
-import { decreaseAvailableCount } from '@/lib/orgLimit'
+import { ERROR_DELETE, ERROR_UNAUTHORIZED } from '@/const/errorMessages'
+import { ORGANIZATION } from '@/const/routes'
+import { createAuditLog } from '@/lib/helpers/createAuditLog'
+import { decreaseAvailableCount } from '@/lib/helpers/orgLimit'
+import { checkSubscription } from '@/lib/helpers/subscription'
 import { auth } from '@clerk/nextjs'
 import { ACTION, ENTITY_TYPE } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
@@ -15,10 +18,11 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 	const { userId, orgId } = auth()
 	if (!userId || !orgId) {
 		return {
-			error: 'Unauthorized',
+			error: ERROR_UNAUTHORIZED,
 		}
 	}
 
+	const isPro = await checkSubscription()
 	const { id } = data
 
 	let board
@@ -30,7 +34,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 			},
 		})
 
-		await decreaseAvailableCount()
+		if (!isPro) await decreaseAvailableCount()
 		await createAuditLog({
 			entityType: ENTITY_TYPE.BOARD,
 			entityId: board.id,
@@ -39,12 +43,12 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 		})
 	} catch (error) {
 		return {
-			error: 'Faile to delete',
+			error: ERROR_DELETE,
 		}
 	}
 
-	revalidatePath(`/organization/${orgId}`)
-	redirect(`/organization/${orgId}`)
+	revalidatePath(`${ORGANIZATION}/${orgId}`)
+	redirect(`${ORGANIZATION}/${orgId}`)
 }
 
 export const deleteBoard = createSafeAction(DeleteBoard, handler)
