@@ -1,6 +1,6 @@
 import { usePathname, useRouter } from 'next/navigation'
 
-export const useNavItem = (orgId: string) => {
+export const useNavItem = () => {
     const router = useRouter()
     const pathname = usePathname()
 
