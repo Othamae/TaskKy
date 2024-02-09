@@ -1,5 +1,6 @@
 export const ERROR_COPY = 'Faile to copy'
 export const ERROR_NOTFOUND = 'Not Found'
+export const ERROR_USER_NOT_FOUND = 'User Not Found'
 export const ERROR_UNAUTHORIZED = 'Unauthorized'
 export const ERROR_CREATE = 'Failed to create'
 export const ERROR_MISSING_FIELDS = 'Missing fields'
