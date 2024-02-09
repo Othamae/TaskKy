@@ -52,6 +52,8 @@ model Card{
   listId String
   list List @relation(fields: [listId], references: [id], onDelete: Cascade)
 
+  checklists Checklist[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   
@@ -68,6 +70,8 @@ enum ENTITY_TYPE{
   BOARD
   LIST
   CARD
+  CHECKLIST
+  TASK
 }
 
 model AuditLog{
@@ -101,4 +105,36 @@ model OrgSubscription{
   stripeSubscriptionId String? @unique @map(name:"stripe_subscription_id")
   stripePriceId String? @map(name:"stripe_price_id")
   stripeCurrentPeriodEnd DateTime? @map(name:"stripe_current_period_end")
+}
+
+model Checklist{
+  id String @id @default(uuid())
+  title String
+  order Int
+  duedate DateTime?
+
+  cardId String
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  tasks Task[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([cardId])
+}
+
+model Task{
+  id String @id @default(uuid())
+  title String
+  order Int
+
+  checklistId String
+  checklist Checklist @relation(fields: [checklistId], references: [id], onDelete: Cascade)
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([checklistId])
 }
