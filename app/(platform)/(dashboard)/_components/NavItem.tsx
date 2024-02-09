@@ -40,7 +40,7 @@ const NavItem = ({ isActive, isExpanded, organization, onExapand }: NavItemProps
 			href: `${ORGANIZATION}/${organization.id}/billing`,
 		},
 	]
-	const { onClick, pathname } = useNavItem(organization.id)
+	const { onClick, pathname } = useNavItem()
 	return (
 		<AccordionItem value={organization.id} className='border-none'>
 			<AccordionTrigger
