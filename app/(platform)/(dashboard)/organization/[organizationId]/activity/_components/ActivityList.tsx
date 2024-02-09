@@ -1,22 +1,15 @@
 import ActivityItem from '@/components/ActivityItem'
 import { Skeleton } from '@/components/ui/skeleton'
-import { db } from '@/lib/db'
-import { auth } from '@clerk/nextjs'
-import { redirect } from 'next/navigation'
+import { NO_ACTIVITY_INSIDE_ORG } from '@/const/const'
+import { getActivityList } from '@/lib/helpers/dbHelpers'
 
 
 const ActivityList = async () => {
-    const { orgId } = auth()
-    if (!orgId) redirect('/select-org')
-
-    const auditLogs = await db.auditLog.findMany({
-        where: { orgId },
-        orderBy: { createdAt: 'desc' },
-    })
+    const auditLogs = await getActivityList()
     return (
         <ol className='space-y-4 mt-4'>
             <p className='hidden last:block text-center text-xs text-muted-foreground'>
-                No activity found inside this organization.
+                {NO_ACTIVITY_INSIDE_ORG}
             </p>
             {auditLogs.map((log) => (
                 <ActivityItem key={log.id} data={log} />
