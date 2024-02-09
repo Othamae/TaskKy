@@ -26,3 +26,15 @@ export async function getListsForBoardIdPage(boardId: string) {
     })
     return lists
 }
+
+export async function getActivityList() {
+    const { orgId } = auth()
+    if (!orgId) redirect(SELECT_ORG)
+
+    const auditLogs = await db.auditLog.findMany({
+        where: { orgId },
+        orderBy: { createdAt: 'desc' },
+    })
+
+    return auditLogs
+}
