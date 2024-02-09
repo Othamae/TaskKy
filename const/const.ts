@@ -1,4 +1,6 @@
 export const MAX_FREE_BOARDS = 5
+export const PRO = 'Pro'
+export const FREE = 'Free'
 
 export const CREATE = 'Create'
 export const COPY = 'Copy'
@@ -17,6 +19,7 @@ export const SUCCESS_CREATED = 'Created'
 export const SUCCESS_COPY = 'Copied'
 export const SUCCESS_DELETED = 'Deleted'
 export const SUCCESS_UPDATED = 'Updated'
+export const SUCCESS_RENAMED = 'Renamed'
 
 export const WORKSPACES = 'Workspaces'
 
@@ -26,6 +29,7 @@ export const DELETE_BOARD = 'Delete board'
 export const CREATE_BOARD = 'Create board'
 export const YOUR_BOARDS = 'Your boards'
 export const CREATE_NEW_BOARD = 'Create new board'
+export const NO_ACTIVITY_INSIDE_ORG = 'No activity found inside this organization.'
 
 // LIST
 export const ADD_LIST = 'Add list'
