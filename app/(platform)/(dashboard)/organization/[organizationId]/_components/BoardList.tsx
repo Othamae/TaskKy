@@ -2,38 +2,29 @@ import Hint from '@/components/Hint'
 import FormPopover from '@/components/form/FormPopover'
 import { Skeleton } from '@/components/ui/skeleton'
 import { MAX_FREE_BOARDS } from '@/const/boards'
-import { db } from '@/lib/db'
-import { getAvailableCount } from '@/lib/orgLimit'
-import { auth } from '@clerk/nextjs'
+import { CREATE_NEW_BOARD, YOUR_BOARDS } from '@/const/const'
+import { BOARD } from '@/const/routes'
+import { useBoardList } from '@/hooks/useBoardList'
 import { HelpCircle, User2 } from 'lucide-react'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 
 const BoardList = async () => {
-	const { orgId } = auth()
+	const {
+		availableCount,
+		isPro,
+		listOfBoards
+	} = await useBoardList()
 
-	if (!orgId) return redirect('/select-org')
-
-	const listOfBoards = await db.board.findMany({
-		where: {
-			orgId,
-		},
-		orderBy: {
-			createdAt: 'desc',
-		},
-	})
-
-	const availableCount = await getAvailableCount()
 	return (
 		<div className='space-y-4'>
 			<div className='flex items-center font-semibold text-lg text-neutral-700'>
 				<User2 className='h-6 w-6 mr-2' />
-				Your Boards
+				{YOUR_BOARDS}
 			</div>
 			<div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4'>
 				{listOfBoards.map((board) => (
 					<Link
-						href={`/board/${board.id}`}
+						href={`${BOARD}/${board.id}`}
 						key={board.id}
 						style={{ backgroundImage: `url(${board.imageThumUrl})` }}
 						className='group relative aspect-video bg-no-repeat bg-center bg bg-cover bg-sky-700 rounded-sm h-full w-full p-2 overflow-hidden'
@@ -47,8 +38,9 @@ const BoardList = async () => {
 						role='button'
 						className='aspect-video relative h-full w-full bg-muted rounded-sm flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition'
 					>
-						<p className='text-sm'>Create new board</p>
-						<span className='text-xs'>{MAX_FREE_BOARDS - availableCount} remaining</span>
+						<p className='text-sm'>{CREATE_NEW_BOARD}</p>
+						<span className='text-xs'>
+							{isPro ? 'Unlimited' : `${MAX_FREE_BOARDS - availableCount} remaining`}</span>
 						<Hint
 							sideOffset={40}
 							description={`Free Workspaces can have up to 5 open boards. For unlimited boards upgrade this workspace`}
