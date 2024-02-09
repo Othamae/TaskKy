@@ -14,7 +14,9 @@ export async function GET(request: Request,
             where: {
                 orgId,
                 entityId: params.cardId,
-                entityType: ENTITY_TYPE.CARD
+                entityType: {
+                    in: [ENTITY_TYPE.CARD, ENTITY_TYPE.CHECKLIST, ENTITY_TYPE.TASK]
+                }
             },
             orderBy: { createdAt: 'desc' },
             take: 3
