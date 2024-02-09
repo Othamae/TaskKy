@@ -1,5 +1,5 @@
 'use client'
-import { useCardModal } from '@/hooks/useCardModal'
+import { cardModalStore } from '@/store/cardModalStore'
 import { Draggable } from '@hello-pangea/dnd'
 import { Card } from '@prisma/client'
 
@@ -9,7 +9,7 @@ interface CardItemProps {
 }
 
 const CardItem = ({ index, card }: CardItemProps) => {
-	const cardModal = useCardModal()
+	const cardModal = cardModalStore()
 	return (
 		<Draggable draggableId={card.id} index={index}>
 			{(provided) => (
