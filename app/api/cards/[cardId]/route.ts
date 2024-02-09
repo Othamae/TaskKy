@@ -20,6 +20,7 @@ export async function GET(req: Request, { params }: { params: { cardId: string }
 				list: {
 					select: { title: true },
 				},
+				checklists: true,
 			},
 		})
 
