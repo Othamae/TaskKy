@@ -1,7 +1,8 @@
 'use client'
 
 import FormInput from '@/components/form/FormInput'
-import { useListHeader } from '@/hooks/useListHeader'
+import { ENTER_A_LIST_TITTLE_PLACEHOLDER } from '@/const/const'
+import { useHeader } from '@/hooks/useHeader'
 import { List } from '@prisma/client'
 import ListOptions from './ListOptions'
 
@@ -10,7 +11,7 @@ interface ListHeaderProps {
 	onAddCard: () => void
 }
 const ListHeader = ({ list, onAddCard }: ListHeaderProps) => {
-	const { title, onBlur, handleSubmit, enableEditing, inputRef, isEditing, formRef } = useListHeader(list.title)
+	const { title, onBlur, handleSubmit, enableEditing, inputRef, isEditing, formRef } = useHeader({ defaultTitle: list.title, type: 'List' })
 	return (
 		<div className='pt-2 px-2 text-sm font-semibold flex justify-between items-start gap-x-2'>
 			{isEditing ? (
@@ -21,7 +22,7 @@ const ListHeader = ({ list, onAddCard }: ListHeaderProps) => {
 						ref={inputRef}
 						id='title'
 						onBlur={onBlur}
-						placeholder='Enter list title...'
+						placeholder={ENTER_A_LIST_TITTLE_PLACEHOLDER}
 						defaultValue={title}
 						className='text-sm px-[7px] py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition truncate bg-transparent focus:bg-white'
 					/>
