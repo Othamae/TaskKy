@@ -4,7 +4,8 @@ import FormSubmitButton from '@/components/form/FormSubmitButton'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverClose, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
-import { UseListOptions } from '@/hooks/useListOptions'
+import { ADD_CARD, COPY_LIST, DELETE_THIS_LIST } from '@/const/const'
+import { useOptions } from '@/hooks/useOptions'
 import { List } from '@prisma/client'
 import { MoreHorizontal, X } from 'lucide-react'
 
@@ -14,38 +15,7 @@ interface ListOptionsProps {
 }
 
 const ListOptions = ({ list, onAddCard }: ListOptionsProps) => {
-	// const closeRef = useRef<ElementRef<'button'>>(null)
-	// const { execute: executeDelete } = useAction(deleteList, {
-	//     onSuccess: (data) => {
-	//         toast.success(`List "${data.title}" deleted successfully`)
-	//         closeRef.current?.click()
-	//     },
-	//     onError: (error) => {
-	//         toast.error(error)
-	//     }
-	// })
-	// const { execute: executeCopy } = useAction(copyList, {
-	//     onSuccess: (data) => {
-	//         toast.success(`List "${data.title}" copied`)
-	//         closeRef.current?.click()
-	//     },
-	//     onError: (error) => {
-	//         toast.error(error)
-	//     }
-	// })
-
-	// const handleDelete = (formData: FormData) => {
-	//     const id = formData.get('id') as string
-	//     const boardId = formData.get('boardId') as string
-	//     executeDelete({ id, boardId })
-	// }
-
-	// const handleCopy = (formData: FormData) => {
-	//     const id = formData.get('id') as string
-	//     const boardId = formData.get('boardId') as string
-	//     executeCopy({ id, boardId })
-	// }
-	const { handleCopy, handleDelete, closeRef } = UseListOptions()
+	const { handleCopy, handleDelete, closeRef } = useOptions({ type: 'List' })
 
 	return (
 		<Popover>
@@ -66,7 +36,7 @@ const ListOptions = ({ list, onAddCard }: ListOptionsProps) => {
 					className='rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm'
 					variant='ghost'
 				>
-					Add card...
+					{ADD_CARD}...
 				</Button>
 				<form action={handleCopy}>
 					<input hidden id='id' name='id' value={list.id} />
@@ -75,7 +45,7 @@ const ListOptions = ({ list, onAddCard }: ListOptionsProps) => {
 						className='rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm'
 						variant='ghost'
 					>
-						Copy list...
+						{COPY_LIST}...
 					</FormSubmitButton>
 				</form>
 				<Separator />
@@ -86,7 +56,7 @@ const ListOptions = ({ list, onAddCard }: ListOptionsProps) => {
 						className='rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm'
 						variant='ghost'
 					>
-						Delete this list...
+						{DELETE_THIS_LIST}...
 					</FormSubmitButton>
 				</form>
 			</PopoverContent>
