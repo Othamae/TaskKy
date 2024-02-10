@@ -1,7 +1,9 @@
 import { updateChecklist } from '@/actions/updateChecklist'
 import { updateList } from '@/actions/updateList'
-import { SUCCESS_RENAMED, TYPE_CHECKLIST, TYPE_LIST } from '@/const/const'
+import { updateTask } from '@/actions/updateTask'
+import { SUCCESS_RENAMED, TYPE_CHECKLIST, TYPE_LIST, TYPE_TASK } from '@/const/const'
 import { useAction } from '@/hooks/useAction'
+import { revalidateQueries } from '@/lib/helpers/helpers'
 import { useQueryClient } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 import { ElementRef, useRef, useState } from 'react'
@@ -11,7 +13,7 @@ import { useEditing } from './useEditing'
 
 interface useHeaderProps {
 	defaultTitle: string,
-	type: 'List' | 'Checklist'
+	type: 'List' | 'Checklist' | 'Task'
 }
 
 export const useHeader = ({ defaultTitle, type }: useHeaderProps) => {
@@ -28,15 +30,7 @@ export const useHeader = ({ defaultTitle, type }: useHeaderProps) => {
 
 	const { execute: executeUpdateChecklist } = useAction(updateChecklist, {
 		onSuccess: (data) => {
-			queryClient.invalidateQueries({
-				queryKey: ['card', data.cardId],
-			})
-			queryClient.invalidateQueries({
-				queryKey: ['card-logs', data.cardId],
-			})
-			queryClient.invalidateQueries({
-				queryKey: ['card-checkList', data.cardId],
-			})
+			revalidateQueries(data.cardId, queryClient)			
 			toast.success(`${TYPE_CHECKLIST} "${data.title}" ${SUCCESS_RENAMED}`)
 			setTitle(data.title)
 			disableEditing()
@@ -56,6 +50,18 @@ export const useHeader = ({ defaultTitle, type }: useHeaderProps) => {
 			toast.error(error)
 		},
 	})
+
+	const { execute: executeUpdateTask } = useAction(updateTask, {
+		onSuccess: (data) => {
+			revalidateQueries(data.checklist.cardId, queryClient)
+			toast.success(`${TYPE_TASK} "${data.title}" ${SUCCESS_RENAMED}`)
+			setTitle(data.title)
+			disableEditing()
+		},
+		onError: (error) => {
+			toast.error(error)
+		},
+	})
 	const onKeyDown = (e: KeyboardEvent) => {
 		if (e.key === 'Escape') {
 			formRef.current?.submit()
@@ -66,16 +72,14 @@ export const useHeader = ({ defaultTitle, type }: useHeaderProps) => {
 		const title = formData.get('title') as string
 		const id = formData.get('id') as string
 		const boardId = formData.get('boardId') as string
+		const cardId = formData.get('cardId') as string
+		const checklistId = formData.get('checklistId') as string
 
 		if (title === defaultTitle) return disableEditing()
 
-		if (type === 'Checklist') {
-			const cardId = formData.get('cardId') as string
-			executeUpdateChecklist({ title, cardId, id, boardId: boarIDfromParams })
-
-		} else if (type === 'List') {
-			executeUpdateList({ title, boardId, id })
-		}
+		if (type === 'Checklist') executeUpdateChecklist({ title, cardId, id, boardId: boarIDfromParams })
+		if (type === 'List') executeUpdateList({ title, boardId, id })
+		if (type === 'Task') executeUpdateTask({ title, boardId: boarIDfromParams, id, cardId, checklistId })
 
 	}
 	const onBlur = () => {
