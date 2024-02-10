@@ -1,7 +1,7 @@
 'use server'
 import { db } from '@/lib/db'
 
-import { TYPE_CHECKLIST } from '@/const/const'
+import { TYPE_CARD } from '@/const/const'
 import { ERROR_CREATE, ERROR_NOTFOUND, ERROR_UNAUTHORIZED } from '@/const/errorMessages'
 import { BOARD } from '@/const/routes'
 import { createAuditLog } from '@/lib/helpers/createAuditLog'
@@ -30,7 +30,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 				list: { board: { orgId } }
 			},
 		})
-		if (!card) return { error: `${TYPE_CHECKLIST} ${ERROR_NOTFOUND}` }
+		if (!card) return { error: `${TYPE_CARD} ${ERROR_NOTFOUND}` }
 
 		const lastChecklist = await db.checklist.findFirst({
 			where: { cardId },
