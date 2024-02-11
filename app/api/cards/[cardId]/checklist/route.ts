@@ -13,7 +13,12 @@ export async function GET(request: Request,
             where: {
                 cardId: params.cardId
             },
-            orderBy: { createdAt: 'desc' }
+            orderBy: { createdAt: 'desc' },
+            include: {
+                tasks: {
+                    orderBy: { order: 'asc' }
+                }
+            },
         })
 
         return NextResponse.json(checkLists)
