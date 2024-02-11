@@ -49,8 +49,14 @@ export const ENTER_A_CHECKLIST_TITTLE_PLACEHOLDER = 'Enter a title for this chec
 export const ADD_CHECKLIST = 'Add checklist'
 export const DELETE_THIS_CHECKLIST = 'Delete this checklist'
 export const CHECKLIST_ACTIONS = 'Checklist Actions'
+export const CREATE_CHECKLIST = 'Create Checklist'
 
 // TASK
 export const ADD_TASK = 'Add task'
 export const ADD_A_TASK = 'Add a task'
+export const TASK_ACTIONS = 'Task Actions'
+export const CONVERT_TO_CARD = 'Convert to card'
+export const ENTER_TASK_PLACEHOLDER = 'Enter a task...'
+
+
 
