@@ -31,6 +31,11 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 					board: { orgId },
 				},
 			},
+			include: {
+				checklists: {
+					include: { tasks: true }
+				}
+			}
 		})
 
 		if (!cardToCopy) return { error: `${TYPE_CARD} ${ERROR_NOTFOUND}` }
@@ -42,14 +47,35 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 		})
 
 		const newOrder = lastCard ? lastCard?.order + 1 : 1
+
 		card = await db.card.create({
 			data: {
 				title: `${cardToCopy.title} - ${COPY}`,
 				description: cardToCopy.description,
 				order: newOrder,
-				listId: cardToCopy.listId,
+				listId: cardToCopy.listId
 			},
 		})
+
+		for (const checklist of cardToCopy.checklists) {
+			const newChecklist = await db.checklist.create({
+				data: {
+					title: checklist.title,
+					order: checklist.order,
+					cardId: card.id,
+					tasks: {
+						createMany: {
+							data: checklist.tasks.map((task) => ({
+								title: task.title,
+								order: task.order,
+							}))
+						}
+					}
+				}
+			})
+			console.log(newChecklist)
+		}
+
 
 		await createAuditLog({
 			entityType: ENTITY_TYPE.CARD,
