@@ -10,7 +10,7 @@ const ChecklistItem = ({ item }: ChecklistItemProps) => {
     return (
         <li>
             <ChecklistHeader checklist={item} />
-            <Tasks tasks={item.tasks} checklistId={item.id} />
+            <Tasks checklist={item} />
         </li>
 
     )
