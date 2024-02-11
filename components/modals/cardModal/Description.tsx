@@ -1,70 +1,25 @@
 'use client'
 
-import { updateCard } from '@/actions/updateCard'
 import FormSubmitButton from '@/components/form/FormSubmitButton'
 import FormTextarea from '@/components/form/FormTextarea'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useAction } from '@/hooks/useAction'
-import { useEditing } from '@/hooks/useEditing'
+import { CANCEL, CARD_DESCRIPTION, SAVE } from '@/const/const'
+import { useDescription } from '@/hooks/useDescription'
 import { CardWithList } from '@/lib/types'
-import { useQueryClient } from '@tanstack/react-query'
 import { AlignLeft } from 'lucide-react'
-import { useParams } from 'next/navigation'
-import { ElementRef, useRef } from 'react'
-import { toast } from 'sonner'
-import { useEventListener, useOnClickOutside } from 'usehooks-ts'
 
 interface DescriptionProps {
 	data: CardWithList
 }
 
 const Description = ({ data }: DescriptionProps) => {
-	const queryClient = useQueryClient()
-	const params = useParams()
-
-	const textareaRef = useRef<ElementRef<'textarea'>>(null)
-	const formRef = useRef<ElementRef<'form'>>(null)
-
-	const { isEditing, enableEditing, disableEditing } = useEditing({ refElement: textareaRef })
-
-	const { execute, fieldErrors } = useAction(updateCard, {
-		onSuccess: (data) => {
-			toast.success(`Description updated for "${data.title}"`)
-			disableEditing()
-			queryClient.invalidateQueries({
-				queryKey: ['card', data.id],
-			})
-			queryClient.invalidateQueries({
-				queryKey: ['card-logs', data.id],
-			})
-		},
-		onError: (error) => {
-			toast.error(error)
-		},
-	})
-
-	const onKeyDown = (e: KeyboardEvent) => {
-		if (e.key === 'Escape') {
-			disableEditing()
-		}
-	}
-
-	useEventListener('keydown', onKeyDown)
-	useOnClickOutside(formRef, disableEditing)
-
-	const onSubmit = (formData: FormData) => {
-		const description = formData.get('description') as string
-		const boardId = params.boardId as string
-
-		execute({ description, boardId, id: data.id })
-	}
-
+	const { onSubmit, textareaRef, formRef, fieldErrors, disableEditing, enableEditing, isEditing } = useDescription(data.id)
 	return (
 		<div className='flex items-start gap-x-3 w-full'>
 			<AlignLeft className='w-4 h-4 mt-0.5 text-neutral-700' />
 			<div className='w-full'>
-				<p className='font-semibold text-neutral-700 mb-2'>Description</p>
+				<p className='font-semibold text-neutral-700 mb-2'>{CARD_DESCRIPTION}</p>
 				{isEditing ? (
 					<form action={onSubmit} ref={formRef} className='space-y-2'>
 						<FormTextarea
@@ -76,9 +31,9 @@ const Description = ({ data }: DescriptionProps) => {
 							ref={textareaRef}
 						/>
 						<div className='flex items-center gap-x-2'>
-							<FormSubmitButton>Save</FormSubmitButton>
+							<FormSubmitButton>{SAVE}</FormSubmitButton>
 							<Button type='button' onClick={disableEditing} size='sm' variant='ghost'>
-								Cancel
+								{CANCEL}
 							</Button>
 						</div>
 					</form>
