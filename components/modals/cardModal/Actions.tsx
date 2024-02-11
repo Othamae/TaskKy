@@ -5,8 +5,8 @@ import { deleteCard } from '@/actions/deleteCard'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAction } from '@/hooks/useAction'
-import { useCardModal } from '@/hooks/useCardModal'
 import { CardWithList } from '@/lib/types'
+import { cardModalStore } from '@/store/cardModalStore'
 import { Copy, Trash } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { toast } from 'sonner'
@@ -17,7 +17,7 @@ interface ActionsProps {
 const Actions = ({ data }: ActionsProps) => {
 	const params = useParams()
 	const boardId = params.boardId as string
-	const cardModal = useCardModal()
+	const cardModal = cardModalStore()
 
 	const { execute: executeCopyCard, isLoading: isLoadingCopy } = useAction(copyCard, {
 		onSuccess: (data) => {
