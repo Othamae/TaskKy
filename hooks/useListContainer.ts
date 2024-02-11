@@ -1,6 +1,6 @@
 import { updateCardOrder } from '@/actions/updateCardOrder'
 import { updateListOrder } from '@/actions/updateListOrder'
-import { reorder } from '@/lib/helpers'
+import { reorder } from '@/lib/helpers/helpers'
 import { ListWithCards } from '@/lib/types'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
