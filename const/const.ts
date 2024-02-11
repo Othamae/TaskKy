@@ -5,6 +5,8 @@ export const FREE = 'Free'
 export const CREATE = 'Create'
 export const COPY = 'Copy'
 export const DELETE = 'Delete'
+export const SAVE = 'Save'
+export const CANCEL = 'Cancel'
 
 export const TYPE_BOARD = 'Board'
 export const TYPE_LIST = 'List'
@@ -43,6 +45,7 @@ export const COPY_LIST = 'Copy list'
 export const ADD_CARD = 'Add card'
 export const ADD_A_CARD = 'Add a card'
 export const ENTER_A_CARD_TITTLE_PLACEHOLDER = 'Enter a title for this card...'
+export const CARD_DESCRIPTION = 'Description'
 
 // CHECKLIST
 export const COPY_CHECKLIST = 'Copy checklist'
