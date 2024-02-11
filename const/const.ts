@@ -20,6 +20,7 @@ export const SUCCESS_COPY = 'Copied'
 export const SUCCESS_DELETED = 'Deleted'
 export const SUCCESS_UPDATED = 'Updated'
 export const SUCCESS_RENAMED = 'Renamed'
+export const SUCCESS_DESCRIPTION = 'Description updated for'
 
 export const WORKSPACES = 'Workspaces'
 
