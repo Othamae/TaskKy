@@ -12,7 +12,7 @@ interface ChecklistHeaderProps {
 }
 
 const ChecklistHeader = ({ checklist }: ChecklistHeaderProps) => {
-    const { title, onBlur, handleSubmit, enableEditing, inputRef, isEditing, formRef } = useHeader({ defaultTitle: checklist.title, type: 'Checklist' })
+    const { title, onBlur, handleSubmit, enableEditing, inputRef, isEditing, formRef, fieldErrorsChecklist } = useHeader({ defaultTitle: checklist.title, type: 'Checklist' })
 
     return (
         <div className='flex justify-between items-start gap-x-2 w-full'>
@@ -27,6 +27,7 @@ const ChecklistHeader = ({ checklist }: ChecklistHeaderProps) => {
                         onBlur={onBlur}
                         placeholder={ENTER_A_CHECKLIST_TITTLE_PLACEHOLDER}
                         defaultValue={title}
+                        errors={fieldErrorsChecklist}
                         className='text-base px-[7px] py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition truncate bg-transparent focus:bg-white'
                     />
                     <button hidden type='submit' />
