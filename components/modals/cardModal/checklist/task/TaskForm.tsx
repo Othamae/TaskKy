@@ -4,22 +4,22 @@ import FormInput from '@/components/form/FormInput'
 import FormSubmitButton from '@/components/form/FormSubmitButton'
 import { Button } from '@/components/ui/button'
 import { ADD_TASK, ENTER_TASK_PLACEHOLDER } from '@/const/const'
+import { useEditing } from '@/hooks/useEditing'
 import { useOptions } from '@/hooks/useOptions'
 import { ChecklistWithTasks } from '@/lib/types'
-import { Plus, X } from 'lucide-react'
-import { forwardRef } from 'react'
+import { X } from 'lucide-react'
+import { ElementRef, forwardRef, useRef } from 'react'
+import TaskAddButton from './TaskAddButton'
 
 interface TaskFormProps {
-	isEditing: boolean
-	enableEditing: () => void
-	disableEditing: () => void
 	checklist: ChecklistWithTasks
 }
 
-const TaskForm = forwardRef<HTMLInputElement, TaskFormProps>(
-	({ isEditing, enableEditing, disableEditing, checklist }, ref) => {
-
-		const { handleCreate, taskFieldErrors, formRef, closeRef } = useOptions({ type: 'Task' })
+const TaskForm = forwardRef<HTMLInputElement, TaskFormProps>(	
+	({ checklist }, ref) => {
+		const inputRef = useRef<ElementRef<'input'>>(null)
+		const { disableEditing, enableEditing, isEditing } = useEditing({ refElement: inputRef })
+		const { closeRef, handleCreate, formRef, taskFieldErrors } = useOptions({ type: 'Task' })
 		return (
 			isEditing
 				?
@@ -40,17 +40,7 @@ const TaskForm = forwardRef<HTMLInputElement, TaskFormProps>(
 					</div>
 				</form>
 				:
-				<div className='pt-2 ml-7'>
-					<Button
-						onClick={enableEditing}
-						className='h-auto justify-start text-sm'
-						size='inLine'
-						variant='gray'
-					>
-						<Plus className='w-4 h-4 mr-1'></Plus>
-						{ADD_TASK}
-					</Button>
-				</div>
+				<TaskAddButton enableEditing={enableEditing} />
 		)
 	},
 )
