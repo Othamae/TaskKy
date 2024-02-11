@@ -1,6 +1,7 @@
 'use client'
 import { copyChecklist } from '@/actions/copyChecklist'
 import { copyList } from '@/actions/copyList'
+import { createCard } from '@/actions/createCard'
 import { createTask } from '@/actions/createTask'
 import { deleteChecklist } from '@/actions/deleteChecklist'
 import { deleteList } from '@/actions/deleteList'
@@ -8,6 +9,7 @@ import { deleteTask } from '@/actions/deleteTask'
 import { SUCCESS_COPY, SUCCESS_CREATED, SUCCESS_DELETED, TYPE_CHECKLIST, TYPE_LIST, TYPE_TASK } from '@/const/const'
 import { useAction } from '@/hooks/useAction'
 import { revalidateQueries } from '@/lib/helpers/helpers'
+import { cardModalStore } from '@/store/cardModalStore'
 import { useQueryClient } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 import { ElementRef, useRef } from 'react'
@@ -21,9 +23,10 @@ export const useOptions = ({ type }: UseOptionsProps) => {
 	const queryClient = useQueryClient()
 	const closeRef = useRef<ElementRef<'button'>>(null)
 	const formRef = useRef<ElementRef<'form'>>(null)
-
+	const cardModal = cardModalStore()
+	const listId = cardModal.listId as string
 	const params = useParams()
-	const boardIdFromParams = params.boardId as string
+	const boardIdFromParams = params.boardId as string	
 	const { execute: executeListDelete } = useAction(deleteList, {
 		onSuccess: (data) => {
 			toast.success(`${TYPE_LIST} "${data.title}" ${SUCCESS_DELETED}`)
@@ -74,11 +77,25 @@ export const useOptions = ({ type }: UseOptionsProps) => {
 			toast.error(error)
 		},
 	})
+
 	const { execute: executeTaskCreate, fieldErrors: taskFieldErrors } = useAction(createTask, {
 		onSuccess: (data) => {
+			revalidateQueries(data.checklist.cardId, queryClient)
 			toast.success(`${TYPE_TASK} "${data.title}" ${SUCCESS_CREATED}`)
 			closeRef.current?.click()
-			revalidateQueries(data.checklist.cardId, queryClient)
+			formRef.current?.reset()
+		},
+		onError: (error) => {
+			toast.error(error)
+		},
+	})
+
+	const { execute: executeCardCreate, } = useAction(createCard, {
+		onSuccess: (data) => {
+			toast.success(`Card "${data.title}" created`)
+			closeRef.current?.click()
+			formRef.current?.reset()
+			cardModal.onClose()
 		},
 		onError: (error) => {
 			toast.error(error)
@@ -109,14 +126,22 @@ export const useOptions = ({ type }: UseOptionsProps) => {
 	const handleCreate = (formData: FormData) => {
 		const checklistId = formData.get('checklistId') as string
 		const title = formData.get('title') as string
-		executeTaskCreate({ title, boardId: boardIdFromParams, checklistId })
+		if (type === 'Task') executeTaskCreate({ title, boardId: boardIdFromParams, checklistId })
 	}
+
+	const handleCreateCard = (formData: FormData) => {
+		const title = formData.get('title') as string
+		const boardId = params.boardId as string
+		executeCardCreate({ title, listId, boardId })
+	}
+
 	return {
 		handleDelete,
 		handleCopy,
 		closeRef,
 		handleCreate,
 		formRef,
-		taskFieldErrors
+		taskFieldErrors,
+		handleCreateCard
 	}
 }
