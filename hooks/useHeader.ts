@@ -1,7 +1,8 @@
+import { updateCard } from '@/actions/updateCard'
 import { updateChecklist } from '@/actions/updateChecklist'
 import { updateList } from '@/actions/updateList'
 import { updateTask } from '@/actions/updateTask'
-import { SUCCESS_RENAMED, TYPE_CHECKLIST, TYPE_LIST, TYPE_TASK } from '@/const/const'
+import { SUCCESS_RENAMED, TYPE_CARD, TYPE_CHECKLIST, TYPE_LIST, TYPE_TASK } from '@/const/const'
 import { useAction } from '@/hooks/useAction'
 import { revalidateQueries } from '@/lib/helpers/helpers'
 import { useQueryClient } from '@tanstack/react-query'
@@ -13,7 +14,7 @@ import { useEditing } from './useEditing'
 
 interface useHeaderProps {
 	defaultTitle: string,
-	type: 'List' | 'Checklist' | 'Task'
+	type: 'List' | 'Checklist' | 'Task' | 'Card'
 }
 
 export const useHeader = ({ defaultTitle, type }: useHeaderProps) => {
@@ -62,6 +63,19 @@ export const useHeader = ({ defaultTitle, type }: useHeaderProps) => {
 			toast.error(error)
 		},
 	})
+
+	const { execute: executeUpdateCard, fieldErrors: fieldErrorsCard } = useAction(updateCard, {
+		onSuccess: (data) => {
+			revalidateQueries(data.id, queryClient)
+			toast.success(`${TYPE_CARD} "${data.title}" ${SUCCESS_RENAMED}`)
+			setTitle(data.title)
+			disableEditing()
+		},
+		onError: (error) => {
+			toast.error(error)
+		},
+	})
+
 	const onKeyDown = (e: KeyboardEvent) => {
 		if (e.key === 'Escape') {
 			formRef.current?.submit()
@@ -80,10 +94,11 @@ export const useHeader = ({ defaultTitle, type }: useHeaderProps) => {
 		if (type === 'Checklist') executeUpdateChecklist({ title, cardId, id, boardId: boarIDfromParams })
 		if (type === 'List') executeUpdateList({ title, boardId, id })
 		if (type === 'Task') executeUpdateTask({ title, boardId: boarIDfromParams, id, cardId, checklistId })
-
+		if (type === 'Card') executeUpdateCard({ title, boardId: boarIDfromParams, id })
 	}
 	const onBlur = () => {
 		formRef.current?.requestSubmit()
+		if (type === 'Card') inputRef.current?.form?.requestSubmit()
 	}
 
 	useEventListener('keydown', onKeyDown)
@@ -98,6 +113,7 @@ export const useHeader = ({ defaultTitle, type }: useHeaderProps) => {
 		formRef,
 		fieldErrorsChecklist,
 		fieldErrorslist,
-		fieldErrorsTask
+		fieldErrorsTask,
+		fieldErrorsCard
 	}
 }
