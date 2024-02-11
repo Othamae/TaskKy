@@ -4,16 +4,15 @@ import FormSubmitButton from '@/components/form/FormSubmitButton'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverClose, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
-import { ADD_TASK, CHECKLIST_ACTIONS, COPY_CHECKLIST, DELETE_THIS_CHECKLIST } from '@/const/const'
+import { CHECKLIST_ACTIONS, COPY_CHECKLIST, DELETE_THIS_CHECKLIST } from '@/const/const'
 import { useOptions } from '@/hooks/useOptions'
 import { ChecklistWithTasks } from '@/lib/types'
 import { MoreHorizontal, X } from 'lucide-react'
 
 interface ChecklistOptionsProps {
     checklist: ChecklistWithTasks
-    onAddTask: () => void
 }
-const ChecklistOptions = ({ checklist, onAddTask }: ChecklistOptionsProps) => {
+const ChecklistOptions = ({ checklist }: ChecklistOptionsProps) => {
     const { handleCopy, handleDelete, closeRef } = useOptions({ type: 'Checklist' })
     return (
         <Popover>
@@ -29,13 +28,6 @@ const ChecklistOptions = ({ checklist, onAddTask }: ChecklistOptionsProps) => {
                         <X className='h-4 w-4' />
                     </Button>
                 </PopoverClose>
-                <Button
-                    onClick={onAddTask}
-                    className='rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm'
-                    variant='ghost'
-                >
-                    {ADD_TASK}...
-                </Button>
                 <form action={handleCopy}>
                     <input hidden id='id' name='id' value={checklist.id} />
                     <input hidden id='cardId' name='cardId' value={checklist.cardId} />
