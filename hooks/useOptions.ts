@@ -91,7 +91,6 @@ export const useOptions = ({ type }: UseOptionsProps) => {
 		const boardId = formData.get('boardId') as string
 		const cardId = formData.get('cardId') as string
 		const checklistId = formData.get('checklistId') as string
-		console.log(id, boardIdFromParams, cardId, checklistId)
 		if (type === 'List') executeListDelete({ id, boardId })
 		if (type === 'Checklist') executeChecklistDelete({ id, boardId: boardIdFromParams, cardId })
 		if (type === 'Task') executeTaskDelete({ id, boardId: boardIdFromParams, cardId, checklistId })
