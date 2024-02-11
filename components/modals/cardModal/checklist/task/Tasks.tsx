@@ -1,6 +1,4 @@
-import { useEditing } from '@/hooks/useEditing'
 import { ChecklistWithTasks } from '@/lib/types'
-import { ElementRef, useRef } from 'react'
 import TaskForm from './TaskForm'
 import TaskItem from './TaskItem'
 
@@ -9,10 +7,7 @@ interface TasksProps {
 }
 
 const Tasks = ({ checklist }: TasksProps) => {
-    const inputRef = useRef<ElementRef<'input'>>(null)
-    const { enableEditing,
-        isEditing,
-        disableEditing, } = useEditing({ refElement: inputRef })
+
     return (
         <div>
             {checklist.tasks &&
@@ -25,7 +20,7 @@ const Tasks = ({ checklist }: TasksProps) => {
                     }
                 </ol>
             }
-            <TaskForm isEditing={isEditing} enableEditing={enableEditing} disableEditing={disableEditing} checklist={checklist} />
+            <TaskForm checklist={checklist} />
         </div>
     )
 
