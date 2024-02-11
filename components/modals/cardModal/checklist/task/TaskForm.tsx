@@ -19,7 +19,7 @@ interface TaskFormProps {
 const TaskForm = forwardRef<HTMLInputElement, TaskFormProps>(
 	({ isEditing, enableEditing, disableEditing, checklist }, ref) => {
 
-		const { handleCreate, taskFieldErrors, formRef } = useOptions({ type: 'Task' })
+		const { handleCreate, taskFieldErrors, formRef, closeRef } = useOptions({ type: 'Task' })
 		return (
 			isEditing
 				?
@@ -34,7 +34,7 @@ const TaskForm = forwardRef<HTMLInputElement, TaskFormProps>(
 					<input name='cardId' hidden id='cardId' value={checklist.cardId} />
 					<div className='flex items-center gap-x-1'>
 						<FormSubmitButton>{ADD_TASK}</FormSubmitButton>
-						<Button onClick={disableEditing} size='sm' variant='ghost'>
+						<Button onClick={disableEditing} size='sm' variant='ghost' ref={closeRef}>
 							<X className='h-5 w-5' />
 						</Button>
 					</div>
