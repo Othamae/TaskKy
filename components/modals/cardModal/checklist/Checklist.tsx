@@ -1,15 +1,14 @@
 'use client'
 
 import { Skeleton } from '@/components/ui/skeleton'
-import { CardWithListAndChecklist, ChecklistWithTasks } from '@/lib/types'
+import { ChecklistWithTasks } from '@/lib/types'
 import ChecklistItem from './ChecklistItem'
 
 interface ChecklistProps {
     items: ChecklistWithTasks[]
-    cardData: CardWithListAndChecklist
 }
 
-const Checklist = ({ items, cardData }: ChecklistProps) => {
+const Checklist = ({ items }: ChecklistProps) => {
     return (
         <div className='flex items-start gap-x-3 w-full'>
             <ol className='space-y-2 w-full'>                {
