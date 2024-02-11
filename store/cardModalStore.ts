@@ -5,6 +5,8 @@ type CardModalStore = {
 	isOpen: boolean
 	onOpen: (id: string) => void
 	onClose: () => void
+	listId?: string
+	setListId: (listId: string) => void
 }
 
 export const cardModalStore = create<CardModalStore>((set) => ({
@@ -12,4 +14,6 @@ export const cardModalStore = create<CardModalStore>((set) => ({
 	isOpen: false,
 	onOpen: (id: string) => set({ isOpen: true, id }),
 	onClose: () => set({ isOpen: false, id: undefined }),
+	listId: undefined,
+	setListId: (listId: string) => set({ listId }),
 }))
