@@ -2,14 +2,14 @@
 
 import { stripeRedirect } from '@/actions/stripeRedirect'
 import { useAction } from '@/hooks/useAction'
-import { useProModal } from '@/hooks/useProModal'
+import { proModalStore } from '@/store/proModalStore'
 import Image from 'next/image'
 import { toast } from 'sonner'
 import { Button } from '../ui/button'
 import { Dialog, DialogContent } from '../ui/dialog'
 
 const ProModal = () => {
-    const proModal = useProModal()
+    const proModal = proModalStore()
 
     const { execute, isLoading } = useAction(stripeRedirect, {
         onSuccess: (data) => {
