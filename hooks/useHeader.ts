@@ -28,7 +28,7 @@ export const useHeader = ({ defaultTitle, type }: useHeaderProps) => {
 	const { disableEditing, enableEditing, isEditing } = useEditing({ refElement: inputRef, select: true })
 
 
-	const { execute: executeUpdateChecklist } = useAction(updateChecklist, {
+	const { execute: executeUpdateChecklist, fieldErrors: fieldErrorsChecklist } = useAction(updateChecklist, {
 		onSuccess: (data) => {
 			revalidateQueries(data.cardId, queryClient)			
 			toast.success(`${TYPE_CHECKLIST} "${data.title}" ${SUCCESS_RENAMED}`)
@@ -40,7 +40,7 @@ export const useHeader = ({ defaultTitle, type }: useHeaderProps) => {
 		},
 	})
 
-	const { execute: executeUpdateList } = useAction(updateList, {
+	const { execute: executeUpdateList, fieldErrors: fieldErrorslist } = useAction(updateList, {
 		onSuccess: (data) => {
 			toast.success(`${TYPE_LIST} "${data.title}" ${SUCCESS_RENAMED}`)
 			setTitle(data.title)
@@ -51,7 +51,7 @@ export const useHeader = ({ defaultTitle, type }: useHeaderProps) => {
 		},
 	})
 
-	const { execute: executeUpdateTask } = useAction(updateTask, {
+	const { execute: executeUpdateTask, fieldErrors: fieldErrorsTask } = useAction(updateTask, {
 		onSuccess: (data) => {
 			revalidateQueries(data.checklist.cardId, queryClient)
 			toast.success(`${TYPE_TASK} "${data.title}" ${SUCCESS_RENAMED}`)
@@ -96,5 +96,8 @@ export const useHeader = ({ defaultTitle, type }: useHeaderProps) => {
 		inputRef,
 		isEditing,
 		formRef,
+		fieldErrorsChecklist,
+		fieldErrorslist,
+		fieldErrorsTask
 	}
 }
