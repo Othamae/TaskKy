@@ -73,7 +73,6 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 					}
 				}
 			})
-			console.log(newChecklist)
 		}
 
 
