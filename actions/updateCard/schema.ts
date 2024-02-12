@@ -23,4 +23,5 @@ export const UpdateCard = z.object({
 				message: 'Description is too short',
 			}),
 	),
+	duedate: z.optional(z.date()),
 })

@@ -20,7 +20,6 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 	}
 
 	const { id, boardId, ...values } = data
-
 	let card
 	try {
 		card = await db.card.update({
@@ -34,6 +33,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 				...values,
 			},
 		})
+
 		await createAuditLog({
 			entityId: card.id,
 			entityTitle: card.title,
