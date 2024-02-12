@@ -2,9 +2,10 @@
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { CardWithListAndChecklist, ChecklistWithTasks } from '@/lib/types'
-import { Clock, Paperclip, Tag } from 'lucide-react'
+import { Paperclip, Tag } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import ChecklistButton from './addToCard/ChecklistButton'
+import DatesButton from './addToCard/DatesButton'
 
 interface AddToCardProps {
     checklistData: ChecklistWithTasks[]
@@ -18,16 +19,8 @@ const AddToCard = ({ checklistData, cardData }: AddToCardProps) => {
         <div className='space-y-2 mt-2'>
             <p className='text-xs font-semibold'>Add to card</p>
             <ChecklistButton cardId={cardData.id} />
-            <Button
-                variant='gray'
-                className='w-full justify-start'
-                size='inLine'
-            // onClick={handleDeleteCard}
-            // disabled={isLoadingDelete}
-            >
-                <Clock className='w-4 h-4 mr-2' />
-                Dates
-            </Button>
+            <DatesButton cardId={cardData.id} />
+
             <Button
                 variant='gray'
                 className='w-full justify-start'
@@ -54,7 +47,7 @@ const AddToCard = ({ checklistData, cardData }: AddToCardProps) => {
 
 AddToCard.Skeleton = function AddToCardSkeleton() {
     return (
-        <div className=''>
+        <div className='space-y-2 mb-2'>
             <Skeleton className='w-20 h-4 bg-neutral-200' />
             <Skeleton className='w-full h-8 bg-neutral-200' />
             <Skeleton className='w-full h-8 bg-neutral-200' />
