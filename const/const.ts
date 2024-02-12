@@ -7,12 +7,15 @@ export const COPY = 'Copy'
 export const DELETE = 'Delete'
 export const SAVE = 'Save'
 export const CANCEL = 'Cancel'
+export const ADDED_FOR = 'Added for'
 
 export const TYPE_BOARD = 'Board'
 export const TYPE_LIST = 'List'
 export const TYPE_CARD = 'Card'
 export const TYPE_CHECKLIST = 'Checklist'
 export const TYPE_TASK = 'Task'
+export const TYPE_DATES = 'Dates'
+export const TYPE_DUE_DATE = 'Due Date'
 
 export const MANAGE_SUBSCRIPTION = 'Manage Subscription'
 export const UPGRADE_PRO = 'Upgrade to Pro'
@@ -62,5 +65,8 @@ export const TASK_ACTIONS = 'Task Actions'
 export const CONVERT_TO_CARD = 'Convert to card'
 export const ENTER_TASK_PLACEHOLDER = 'Enter a task...'
 
-
+// DATES
+export const CREATE_DATES = 'Create Date'
+export const ADD_DUE_DATE = 'Add Due Date'
+export const PICK_DAY = 'Pick a Day'
 
