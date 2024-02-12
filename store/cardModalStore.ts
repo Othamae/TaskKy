@@ -7,6 +7,8 @@ type CardModalStore = {
 	onClose: () => void
 	listId?: string
 	setListId: (listId: string) => void
+	dueDate?: Date
+	setDueDate: (dueDate: Date) => void
 }
 
 export const cardModalStore = create<CardModalStore>((set) => ({
@@ -16,4 +18,6 @@ export const cardModalStore = create<CardModalStore>((set) => ({
 	onClose: () => set({ isOpen: false, id: undefined }),
 	listId: undefined,
 	setListId: (listId: string) => set({ listId }),
+	dueDate: undefined,
+	setDueDate: (dueDate: Date) => set({ dueDate }),
 }))
