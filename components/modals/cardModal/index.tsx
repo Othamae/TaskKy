@@ -2,14 +2,13 @@
 
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { useCardModal } from '@/hooks/useCardModal'
-import { format } from 'date-fns'
 import Actions from './Actions'
 import Activity from './Activity'
 import AddToCard from './AddToCard'
 import Description from './Description'
 import Header from './Header'
-import DatesButton from './addToCard/DatesButton'
 import Checklist from './checklist/Checklist'
+import DueDate from './dates/DueDate'
 
 
 const CardModal = () => {	
@@ -21,10 +20,9 @@ const CardModal = () => {
 				<div className='grid grid-cols-1 md:grid-cols-4 md:gap-4'>
 					<div className='col-span-3'>
 						<div className='w-full space-y-6'>
-							<div className='grid grid-cols-1 md:grid-cols-4 md:gap-4'>
+							<div className='grid grid-cols-1 md:grid-cols-2 md:gap-4'>
 								<p>Aqui labels</p>
-								<p> {cardData?.duedate && format(cardData?.duedate, "PPP")}</p>
-								<DatesButton cardData={cardData} />
+								<DueDate cardData={cardData} />
 							</div>
 							{!cardData
 								? <Description.Skeleton />
