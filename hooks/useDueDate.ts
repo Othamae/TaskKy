@@ -1,8 +1,9 @@
 import { updateCard } from '@/actions/updateCard'
-import { ADDED_FOR, TYPE_CARD, TYPE_DUE_DATE } from '@/const/const'
+import { ADDED_FOR, SUCCESS_COMPLETED, SUCCESS_NOT_COMPLETED, TYPE_CARD, TYPE_DUE_DATE } from '@/const/const'
 import { useAction } from '@/hooks/useAction'
 import { revalidateQueries } from '@/lib/helpers/helpers'
 import { cardModalStore } from '@/store/cardModalStore'
+import { CheckedState } from '@radix-ui/react-checkbox'
 import { useQueryClient } from '@tanstack/react-query'
 import { addDays } from 'date-fns'
 import { useParams } from 'next/navigation'
@@ -14,11 +15,14 @@ import { useEditing } from './useEditing'
 
 export const useDueDate = () => {
     const [date, setDate] = useState<Date | undefined>()
+    const [isCompleted, setIsCompleted] = useState(false)
     const { id, setDueDate } = cardModalStore()
     const queryClient = useQueryClient()
     const params = useParams()
     const boarIDfromParams = params.boardId as string
     const cardId = id as string
+    let toCompleteCard = false
+    let uncompleted = false
 
     const formRef = useRef<ElementRef<'form'>>(null)
     const inputRef = useRef<ElementRef<'input'>>(null)
@@ -30,9 +34,10 @@ export const useDueDate = () => {
     const { execute: executeUpdateCard, fieldErrors: fieldErrorsCard } = useAction(updateCard, {
         onSuccess: (data) => {
             revalidateQueries(data.id, queryClient)
-            toast.success(`${TYPE_DUE_DATE} ${ADDED_FOR} ${TYPE_CARD} "${data.title}" `)
+            toast.success(toCompleteCard ? `${TYPE_CARD} "${data.title}" ${uncompleted ? SUCCESS_NOT_COMPLETED : SUCCESS_COMPLETED}` : `${TYPE_DUE_DATE} ${ADDED_FOR} ${TYPE_CARD} "${data.title}" `)
             setDate(data.duedate ?? undefined)
             setDueDate(data.duedate!)
+            setIsCompleted(data.completed ?? false)
             disableEditing()
             closeRef.current?.click()
         },
@@ -54,6 +59,15 @@ export const useDueDate = () => {
         }
     }
 
+    const onCheckedChange = (event: CheckedState) => {
+        const value = event.valueOf() as boolean
+        setIsCompleted(value)
+        toCompleteCard = true
+        uncompleted = !value
+        executeUpdateCard({ boardId: boarIDfromParams, id: cardId, duedate: date, completed: value })
+
+    }
+
     const onBlur = () => {
         formRef.current?.requestSubmit()
         inputRef.current?.form?.requestSubmit()
@@ -71,6 +85,8 @@ export const useDueDate = () => {
         onChange,
         date,
         setDate,
-        closeRef
+        closeRef,
+        onCheckedChange,
+        isCompleted
     }
 }
