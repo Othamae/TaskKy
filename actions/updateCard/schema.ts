@@ -24,4 +24,5 @@ export const UpdateCard = z.object({
 			}),
 	),
 	duedate: z.optional(z.date()),
+	completed: z.optional(z.boolean()),
 })
