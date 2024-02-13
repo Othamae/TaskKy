@@ -9,8 +9,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { PICK_DAY } from '@/const/const'
 import { useDueDate } from '@/hooks/useDueDate'
-import DatesForm from './modals/cardModal/dates/DatesForm'
+import DatesForm from './DatesForm'
 
 export function DatePicker() {
     const { formRef, handleSubmit, date, onChange, setDate, closeRef } = useDueDate()
@@ -22,7 +23,7 @@ export function DatePicker() {
                     onValueChange={onChange}
                 >
                     <SelectTrigger>
-                        <SelectValue placeholder="Select" />
+                        <SelectValue placeholder={PICK_DAY} />
                     </SelectTrigger>
                     <SelectContent position="popper">
                         <SelectItem value="0">Today</SelectItem>
