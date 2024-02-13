@@ -8,6 +8,7 @@ import Activity from './Activity'
 import AddToCard from './AddToCard'
 import Description from './Description'
 import Header from './Header'
+import DatesButton from './addToCard/DatesButton'
 import Checklist from './checklist/Checklist'
 
 
@@ -23,6 +24,7 @@ const CardModal = () => {
 							<div className='grid grid-cols-1 md:grid-cols-4 md:gap-4'>
 								<p>Aqui labels</p>
 								<p> {cardData?.duedate && format(cardData?.duedate, "PPP")}</p>
+								<DatesButton cardData={cardData} />
 							</div>
 							{!cardData
 								? <Description.Skeleton />
@@ -44,8 +46,7 @@ const CardModal = () => {
 					</div>
 				</div>
 			</DialogContent>
-		</Dialog>
-	)
+		</Dialog>)
 }
 
 export default CardModal
