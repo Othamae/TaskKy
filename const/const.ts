@@ -26,6 +26,9 @@ export const SUCCESS_DELETED = 'Deleted'
 export const SUCCESS_UPDATED = 'Updated'
 export const SUCCESS_RENAMED = 'Renamed'
 export const SUCCESS_DESCRIPTION = 'Description updated for'
+export const SUCCESS_COMPLETED = 'Completed'
+export const SUCCESS_NOT_COMPLETED = 'Not Completed'
+
 
 export const WORKSPACES = 'Workspaces'
 
