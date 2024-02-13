@@ -113,7 +113,6 @@ model Checklist{
   id String @id @default(uuid())
   title String
   order Int
-  duedate DateTime?
 
   cardId String
   card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
@@ -130,6 +129,7 @@ model Task{
   id String @id @default(uuid())
   title String
   order Int
+  completed Boolean? @default(false)
 
   checklistId String
   checklist Checklist @relation(fields: [checklistId], references: [id], onDelete: Cascade)
