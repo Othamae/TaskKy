@@ -19,7 +19,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 		}
 	}
 
-	const { id, boardId, title, checklistId, cardId } = data
+	const { id, boardId, checklistId, cardId, ...values } = data
 
 	let task
 	try {
@@ -32,7 +32,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 				checklistId
 			},
 			data: {
-				title,
+				...values,
 			},
 			include: { checklist: true }
 		})

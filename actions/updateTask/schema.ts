@@ -15,4 +15,5 @@ export const UpdateTask = z.object({
 	boardId: z.string(),
 	checklistId: z.string(),
 	cardId: z.string(),
+	completed: z.optional(z.boolean()),
 })
