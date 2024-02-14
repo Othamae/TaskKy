@@ -21,7 +21,6 @@ const CardModal = () => {
 					<div className='col-span-3'>
 						<div className='w-full space-y-6'>
 							<div className='grid grid-cols-1 md:grid-cols-2 md:gap-4'>
-								<p>Aqui labels</p>
 								<DueDate cardData={cardData} />
 							</div>
 							{!cardData
