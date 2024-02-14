@@ -72,4 +72,5 @@ export const ENTER_TASK_PLACEHOLDER = 'Enter a task...'
 export const CREATE_DATES = 'Create Date'
 export const ADD_DUE_DATE = 'Add Due Date'
 export const PICK_DAY = 'Pick a Day'
+export const DELETE_DUE_DATE = 'Delete Due Date'
 
