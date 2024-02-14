@@ -1,9 +1,6 @@
 'use client'
-import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { CardWithListAndChecklist, ChecklistWithTasks } from '@/lib/types'
-import { Paperclip, Tag } from 'lucide-react'
-import { useParams } from 'next/navigation'
 import ChecklistButton from './addToCard/ChecklistButton'
 import DatesButton from './addToCard/DatesButton'
 
@@ -13,34 +10,25 @@ interface AddToCardProps {
 }
 
 const AddToCard = ({ checklistData, cardData }: AddToCardProps) => {
-    const params = useParams()
 
     return (
         <div className='space-y-2 mt-2'>
             <p className='text-xs font-semibold'>Add to card</p>
             <ChecklistButton cardId={cardData.id} />
             <DatesButton card={cardData} />
+            {
+            // TODO: labels and Attachment
 
-            <Button
+            /* <Button
                 variant='gray'
                 className='w-full justify-start'
                 size='inLine'
-            // onClick={handleDeleteCard}
-            // disabled={isLoadingDelete}
             >
                 <Tag className='w-4 h-4 mr-2' />
                 Labels
             </Button>
-            <Button
-                variant='gray'
-                className='w-full justify-start'
-                size='inLine'
-            // onClick={handleDeleteCard}
-            // disabled={isLoadingDelete}
-            >
-                <Paperclip className='w-4 h-4 mr-2' />
-                Attachment
-            </Button>
+            <AttachmentButton />
+            */}
         </div>
     )
 }
