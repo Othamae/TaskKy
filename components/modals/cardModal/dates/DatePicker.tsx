@@ -9,12 +9,18 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { Separator } from '@/components/ui/separator'
 import { PICK_DAY } from '@/const/const'
 import { useDueDate } from '@/hooks/useDueDate'
 import DatesForm from './DatesForm'
+import DeleteDuedateForm from './DeleteDuedateForm'
 
-export function DatePicker() {
-    const { formRef, handleSubmit, date, onChange, setDate, closeRef } = useDueDate()
+interface DatePickerProps {
+    duedate?: Date | null
+}
+
+export function DatePicker({ duedate }: DatePickerProps) {
+    const { formRef, handleSubmit, date, onChange, setDate, closeRef, handleDeleteDuedate } = useDueDate()
 
     return (
         <section className=''>
@@ -36,7 +42,9 @@ export function DatePicker() {
                     <Calendar mode="single" selected={date} onSelect={setDate} />
                 </div>
             </div>
-            <DatesForm date={date} formRef={formRef} handleSubmit={handleSubmit} closeRef={closeRef} />
+            <DatesForm date={duedate ? duedate : date} formRef={formRef} handleSubmit={handleSubmit} closeRef={closeRef} />
+            <Separator />
+            <DeleteDuedateForm handleDelete={handleDeleteDuedate} />
         </section>
     )
 }
