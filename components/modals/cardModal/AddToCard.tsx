@@ -19,7 +19,7 @@ const AddToCard = ({ checklistData, cardData }: AddToCardProps) => {
         <div className='space-y-2 mt-2'>
             <p className='text-xs font-semibold'>Add to card</p>
             <ChecklistButton cardId={cardData.id} />
-            <DatesButton inAddToCard />
+            <DatesButton card={cardData} />
 
             <Button
                 variant='gray'
