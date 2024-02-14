@@ -1,5 +1,6 @@
 import { ChecklistWithTasks } from '@/lib/types'
 import ChecklistHeader from './ChecklistHeader'
+import ChecklistProgress from './ChecklistProgress'
 import Tasks from './task/Tasks'
 
 interface ChecklistItemProps {
@@ -10,6 +11,7 @@ const ChecklistItem = ({ item }: ChecklistItemProps) => {
     return (
         <li>
             <ChecklistHeader checklist={item} />
+            <ChecklistProgress checklist={item} />
             <Tasks checklist={item} />
         </li>
 
