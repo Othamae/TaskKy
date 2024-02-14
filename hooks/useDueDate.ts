@@ -1,5 +1,5 @@
 import { updateCard } from '@/actions/updateCard'
-import { ADDED_FOR, SUCCESS_COMPLETED, SUCCESS_NOT_COMPLETED, TYPE_CARD, TYPE_DUE_DATE } from '@/const/const'
+import { ADDED_FOR, SUCCESS_COMPLETED, SUCCESS_DELETED, SUCCESS_NOT_COMPLETED, TYPE_CARD, TYPE_DUE_DATE } from '@/const/const'
 import { useAction } from '@/hooks/useAction'
 import { revalidateQueries } from '@/lib/helpers/helpers'
 import { cardModalStore } from '@/store/cardModalStore'
@@ -23,6 +23,7 @@ export const useDueDate = () => {
     const cardId = id as string
     let toCompleteCard = false
     let uncompleted = false
+    let deleteDuedate = false
 
     const formRef = useRef<ElementRef<'form'>>(null)
     const inputRef = useRef<ElementRef<'input'>>(null)
@@ -34,7 +35,9 @@ export const useDueDate = () => {
     const { execute: executeUpdateCard, fieldErrors: fieldErrorsCard } = useAction(updateCard, {
         onSuccess: (data) => {
             revalidateQueries(data.id, queryClient)
-            toast.success(toCompleteCard ? `${TYPE_CARD} "${data.title}" ${uncompleted ? SUCCESS_NOT_COMPLETED : SUCCESS_COMPLETED}` : `${TYPE_DUE_DATE} ${ADDED_FOR} ${TYPE_CARD} "${data.title}" `)
+            deleteDuedate
+                ? toast.success(`${TYPE_DUE_DATE} for "${data.title}" ${SUCCESS_DELETED}`)
+                : toast.success(toCompleteCard ? `${TYPE_CARD} "${data.title}" ${uncompleted ? SUCCESS_NOT_COMPLETED : SUCCESS_COMPLETED}` : `${TYPE_DUE_DATE} ${ADDED_FOR} ${TYPE_CARD} "${data.title}" `)
             setDate(data.duedate ?? undefined)
             setDueDate(data.duedate!)
             setIsCompleted(data.completed ?? false)
@@ -57,6 +60,11 @@ export const useDueDate = () => {
         if (e.key === 'Escape') {
             formRef.current?.submit()
         }
+    }
+
+    const handleDeleteDuedate = () => {
+        deleteDuedate = true
+        executeUpdateCard({ boardId: boarIDfromParams, id: cardId, duedate: null })
     }
 
     const onCheckedChange = (event: CheckedState) => {
@@ -87,6 +95,7 @@ export const useDueDate = () => {
         setDate,
         closeRef,
         onCheckedChange,
-        isCompleted
+        isCompleted,
+        handleDeleteDuedate
     }
 }
