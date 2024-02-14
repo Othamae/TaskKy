@@ -17,9 +17,9 @@ const DuedateTrigger = ({ cardData }: DuedateTriggerProps) => {
     const isCompleted = cardData?.completed as boolean
     return (
         duedate &&
-        <div className={cn('w-full justify-start flex gap-x-2 items-center bg-neutral-200 text-secondary-foreground hover:bg-neutral-300 rounded-md group peer',
+        <div className={cn('w-full justify-start flex h-6 items-center bg-neutral-200 text-secondary-foreground hover:bg-neutral-300 rounded-full group peer',
             isCompleted && 'bg-green-200 hover:bg-green-300')}>
-            <Checkbox id={cardData.id} className='ml-2' onCheckedChange={onCheckedChange} defaultChecked={isCompleted} />
+                <Checkbox id={cardData.id} className='ml-2  data-[state=checked]:bg-green-700 ' onCheckedChange={onCheckedChange} defaultChecked={isCompleted} />
             <PopoverTrigger className='w-full flex items-start peer-data-[state=checked]:line-through '>
                 <Button
                     variant='empty'
