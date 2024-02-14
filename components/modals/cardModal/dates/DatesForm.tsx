@@ -14,6 +14,7 @@ interface DatesFormProps {
     formRef: RefObject<HTMLFormElement>
     handleSubmit: (formData: FormData) => void
     closeRef: RefObject<HTMLButtonElement>
+    duedate?: Date | null
 }
 
 const DatesForm = ({ date, formRef, handleSubmit, closeRef }: DatesFormProps) => {
@@ -32,12 +33,12 @@ const DatesForm = ({ date, formRef, handleSubmit, closeRef }: DatesFormProps) =>
             </div>
             <input name='date' hidden id='date' value={date ? format(date, "PPP") : ''} />
             <div className='flex items-center gap-x-1'>
-                <FormSubmitButton>{ADD_DUE_DATE}</FormSubmitButton>
+                <FormSubmitButton disabled={!date}>{ADD_DUE_DATE}</FormSubmitButton>
                 <PopoverClose asChild ref={closeRef}>
                     <Button size='sm' variant='ghost'>
                         <X className='h-5 w-5' />
                     </Button>
-                </PopoverClose>
+                </PopoverClose>                
             </div>
         </form>
     )
