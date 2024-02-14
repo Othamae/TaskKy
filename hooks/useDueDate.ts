@@ -3,6 +3,7 @@ import { ADDED_FOR, SUCCESS_COMPLETED, SUCCESS_DELETED, SUCCESS_NOT_COMPLETED, T
 import { useAction } from '@/hooks/useAction'
 import { revalidateQueries } from '@/lib/helpers/helpers'
 import { cardModalStore } from '@/store/cardModalStore'
+import { Card } from '@prisma/client'
 import { CheckedState } from '@radix-ui/react-checkbox'
 import { useQueryClient } from '@tanstack/react-query'
 import { addDays } from 'date-fns'
@@ -64,15 +65,22 @@ export const useDueDate = () => {
 
     const handleDeleteDuedate = () => {
         deleteDuedate = true
-        executeUpdateCard({ boardId: boarIDfromParams, id: cardId, duedate: null })
+        executeUpdateCard({ boardId: boarIDfromParams, id: cardId, duedate: null, completed: false })
     }
 
     const onCheckedChange = (event: CheckedState) => {
         const value = event.valueOf() as boolean
+        console.log(value)
         setIsCompleted(value)
         toCompleteCard = true
         uncompleted = !value
         executeUpdateCard({ boardId: boarIDfromParams, id: cardId, duedate: date, completed: value })
+    }
+
+    const handleComplete = (card: Card) => {
+        uncompleted = card.completed || false
+        toCompleteCard = true
+        executeUpdateCard({ boardId: boarIDfromParams, id: card.id, completed: !card.completed })
 
     }
 
@@ -96,6 +104,7 @@ export const useDueDate = () => {
         closeRef,
         onCheckedChange,
         isCompleted,
-        handleDeleteDuedate
+        handleDeleteDuedate,
+        handleComplete
     }
 }
