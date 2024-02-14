@@ -13,7 +13,7 @@ const DueDate = ({ cardData }: DueDateProps) => {
     return (
         <Popover  >
             <DuedateTrigger cardData={cardData} />
-            <CalendarContent />
+            <CalendarContent duedate={cardData?.duedate} />
         </Popover>
     )
 }

@@ -9,9 +9,10 @@ import { X } from 'lucide-react'
 
 interface CalendarContentProps {
     inAddToCard?: boolean
+    duedate?: Date | null
 }
 
-const CalendarContent = ({ inAddToCard }: CalendarContentProps) => {
+const CalendarContent = ({ inAddToCard, duedate }: CalendarContentProps) => {
     return (
         <PopoverContent
             className={cn('px-0 pt-3 pb-3 md:-mt-20', inAddToCard && 'md:-mt-44')}
@@ -22,7 +23,7 @@ const CalendarContent = ({ inAddToCard }: CalendarContentProps) => {
                     <X className='h-4 w-4' />
                 </Button>
             </PopoverClose>
-            <DatePicker />
+            <DatePicker duedate={duedate} />
         </PopoverContent>
     )
 }
