@@ -10,8 +10,6 @@ TaskKy is a FullStack task management application designed to help you organize 
 - **Integration:** Seamlessly integrate with popular tools and services to enhance productivity.
 
 
-https://github.com/Othamae/TaskKy/assets/90536006/a0ef13ac-80ae-47fb-a149-31b0633f65c5
-
 ### Dependencies
 
 TaskKy utilizes the following dependencies:
@@ -20,13 +18,15 @@ TaskKy utilizes the following dependencies:
 - **TypeScript** 
 - **Server Actions**
 - **Tailwind CSS**
-- **PostgreSQL:** 
+- **PostgreSQL** 
 - **Stripe**
 - **@clerk/nextjs:** Authentication library for Next.js applications.
 - **@hello-pangea/dnd:** Drag-and-drop library for React.
 - **@prisma/client:** Prisma client for database operations.
 - **@tanstack/react-query:** Data fetching and caching library for React.
 
+
+https://github.com/Othamae/TaskKy/assets/90536006/a0ef13ac-80ae-47fb-a149-31b0633f65c5
   
 ### Installation
 
