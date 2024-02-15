@@ -9,6 +9,9 @@ TaskKy is a FullStack task management application designed to help you organize 
 - **Customization:** Tailor TaskKy to fit your workflow with customizable lists, labels, and tags.
 - **Integration:** Seamlessly integrate with popular tools and services to enhance productivity.
 
+
+https://github.com/Othamae/TaskKy/assets/90536006/a0ef13ac-80ae-47fb-a149-31b0633f65c5
+
 ### Dependencies
 
 TaskKy utilizes the following dependencies:
