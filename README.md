@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TaskKy
 
-## Getting Started
+TaskKy is a FullStack task management application designed to help you organize your work efficiently. Similar to Trello, it provides a flexible platform where you can create cards, lists, and tasks to streamline your workflow.
 
-First, run the development server:
+### Features
+- **Flexible Task Management:** Create, edit, and organize tasks effortlessly with our intuitive interface.
+- **Drag-and-Drop Functionality:** Easily rearrange tasks and lists to prioritize your work.
+- **Collaboration:** Invite team members to collaborate on projects and track progress together.
+- **Customization:** Tailor TaskKy to fit your workflow with customizable lists, labels, and tags.
+- **Integration:** Seamlessly integrate with popular tools and services to enhance productivity.
 
-```bash
+### Dependencies
+
+TaskKy utilizes the following dependencies:
+
+- **Next.js** 
+- **TypeScript** 
+- **Server Actions**
+- **Tailwind CSS**
+- **PostgreSQL:** 
+- **Stripe**
+- **@clerk/nextjs:** Authentication library for Next.js applications.
+- **@hello-pangea/dnd:** Drag-and-drop library for React.
+- **@prisma/client:** Prisma client for database operations.
+- **@tanstack/react-query:** Data fetching and caching library for React.
+
+  
+### Installation
+
+1. Clone the repository: 
+```
+git clone https://github.com/Othamae/TaskKy.git
+```
+2. Navigate to the project directory:
+```
+cd TaskKy
+``` 
+3. Install the dependencies: npm install
+```
+npm install
+``` 
+
+
+### Environment Variables
+You must create in root directory a ``.env`` file with the next lines:
+
+```javascript
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=
+DATABASE_URL=
+NEXT_PUBLIC_UNSPLASH_ACCESS_KEY=
+STRIPE_API_KEY=
+NEXT_PUBLIC_BASE_URL=
+STRIPE_WEBHOOK_SECRET=
+``` 
+### Running the Application
+To run the application in development mode, use the following command:
+```
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Contributing
 
-## Learn More
+Contributions from the community are welcome. Feel free to submit bug reports, feature requests, or pull requests to help improve TaskKy.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
